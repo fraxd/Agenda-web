@@ -23,9 +23,14 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -94,8 +99,21 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "Agenda-Web:build:production",
+            "firebaseProject": "proyecto-agenda-web-a1177",
+            "firebaseHostingSite": "proyecto-agenda-web-a1177"
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "e271ab66-b155-45aa-916f-fa6bc109deb1"
   }
 }

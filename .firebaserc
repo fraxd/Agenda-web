@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "proyecto-agenda-web-a1177": {
+      "hosting": {
+        "Agenda-Web": [
+          "proyecto-agenda-web-a1177"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "proyecto-agenda-web-a1177"
+  }
+}
