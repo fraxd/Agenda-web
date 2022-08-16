@@ -9,10 +9,18 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire/compat';
+
+
+
+
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -21,7 +29,9 @@ import { FormsModule } from '@angular/forms';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     NgbModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase)
+
   ],
   providers: [],
   bootstrap: [AppComponent]

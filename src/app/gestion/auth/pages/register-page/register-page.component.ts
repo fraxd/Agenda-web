@@ -2,29 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginData } from 'src/app/core/interfaces/login-data.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css']
+  selector: 'app-register-page',
+  templateUrl: './register-page.component.html',
+  styleUrls: ['./register-page.component.css']
 })
-export class LoginPageComponent implements OnInit {
+export class RegisterPageComponent implements OnInit {
 
-  loginForm!: FormGroup;
+  registerForm!: FormGroup;
 
   usuario!: LoginData;
 
-  constructor(private readonly fb: FormBuilder, private authService:AuthService) { }
+  constructor(private readonly fb: FormBuilder, private authService:AuthService, private readonly router: Router) { }
 
   ngOnInit(): void {
-    this.loginForm = this.initForm();
+    this.registerForm = this.initForm();
   }
-  // Login
+  // registro
   onSubmit(): void {
-    console.log('form->', this.loginForm.value);
-    const usuario = this.loginForm.value;
-    this.authService.login(usuario).then(res =>{
+    console.log('form->', this.registerForm.value);
+    const usuario = this.registerForm.value;
+    this.authService.register(usuario).then(res =>{
         console.log ("se registro correctaente",res);
+        this.router.navigate(['/login']);
     })
 
   }
