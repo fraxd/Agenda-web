@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginData } from 'src/app/core/interfaces/login-data.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -14,10 +15,11 @@ export class LoginPageComponent implements OnInit {
 
   usuario!: LoginData;
 
-  constructor(private readonly fb: FormBuilder, private authService:AuthService) { }
+  constructor(private readonly fb: FormBuilder, private authService:AuthService, private readonly router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = this.initForm();
+    this.authService.userIsLogged();   
   }
   // Login
   onSubmit(): void {
@@ -25,6 +27,7 @@ export class LoginPageComponent implements OnInit {
     const usuario = this.loginForm.value;
     this.authService.login(usuario).then(res =>{
         console.log ("se registro correctaente",res);
+        this.router.navigate(['/dashboard']);
     })
 
   }
@@ -41,6 +44,8 @@ export class LoginPageComponent implements OnInit {
     // return this.authService.GoogleAuth();
     this.authService.loginWithGoogle().then(res =>{
         console.log ("se inicio correctaente con google",res);
+        this.router.navigate(['/dashboard']);
+
     })
 
   }

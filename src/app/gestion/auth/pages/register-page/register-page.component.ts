@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginData } from 'src/app/core/interfaces/login-data.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -16,18 +17,24 @@ export class RegisterPageComponent implements OnInit {
 
   usuario!: LoginData;
 
-  constructor(private readonly fb: FormBuilder, private authService:AuthService, private readonly router: Router) { }
+  constructor(private readonly fb: FormBuilder, private authService:AuthService, private readonly router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.registerForm = this.initForm();
+    this.toastr.toastrConfig.positionClass = 'toast-center-center';
+
   }
   // registro
   onSubmit(): void {
-    console.log('form->', this.registerForm.value);
+    //console.log('form->', this.registerForm.value);
     const usuario = this.registerForm.value;
     this.authService.register(usuario).then(res =>{
         console.log ("se registro correctaente",res);
         this.router.navigate(['/login']);
+    }).catch((error) =>{
+      console.log(error);
+      this.toastr.error(this.fireBaseError(error.code), 'Error');
+      
     })
 
   }
@@ -46,6 +53,18 @@ export class RegisterPageComponent implements OnInit {
         console.log ("se inicio correctaente con google",res);
     })
 
+  }
+  fireBaseError(code: string){
+    switch(code){
+      case 'auth/email-already-in-use':
+        return 'El correo utilizado ya esta registrado.'
+      case 'auth/weak-password':
+        return 'La contraseña definida es muy debil.'
+      case 'auth/invalid-email':
+        return 'El correo no esta en el formato correcto'
+      default:
+        return 'Error Desconocido'
+    }
   }
 
 }
