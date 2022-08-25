@@ -17,7 +17,9 @@ export class RegisterPageComponent implements OnInit {
 
   usuario!: LoginData;
 
-  constructor(private readonly fb: FormBuilder, private authService:AuthService, private readonly router: Router, private toastr: ToastrService) { }
+  loading: boolean = false;
+
+  constructor(private readonly fb: FormBuilder, private authService: AuthService, private readonly router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.registerForm = this.initForm();
@@ -27,35 +29,51 @@ export class RegisterPageComponent implements OnInit {
   // registro
   onSubmit(): void {
     //console.log('form->', this.registerForm.value);
-    const usuario = this.registerForm.value;
-    this.authService.register(usuario).then(res =>{
-        console.log ("se registro correctaente",res);
-        this.router.navigate(['/login']);
-    }).catch((error) =>{
+    const email = this.registerForm.value.email;
+    const password = this.registerForm.value.password;
+    const confirmPassword = this.registerForm.value.confirmPassword;
+    this.usuario = { email, password };
+
+    if (password !== confirmPassword) {
+      this.toastr.error('Las contraseñas ingresadas deben coincidir', 'Error');
+      return;
+    }
+
+    this.loading = true;
+
+    this.authService.register(this.usuario).then(res => {
+      console.log("se registro correctaente", res);
+      this.loading = false;
+      this.router.navigate(['/login']);
+      this.toastr.success('El usuario fue registrad exitosamente','Usuario registrado');
+    }).catch((error) => {
       console.log(error);
+      this.loading = false;
       this.toastr.error(this.fireBaseError(error.code), 'Error');
-      
+
     })
 
   }
   /// inicializacion del formulario
-  initForm(): FormGroup{
+  initForm(): FormGroup {
     return this.fb.group({
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(8)]]
-      })
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(8)]]
+
+    })
   }
 
   // Ingreso con google 
-  ingresarGoogle(){
+  ingresarGoogle() {
     // return this.authService.GoogleAuth();
-    this.authService.loginWithGoogle().then(res =>{
-        console.log ("se inicio correctaente con google",res);
+    this.authService.loginWithGoogle().then(res => {
+      console.log("se inicio correctaente con google", res);
     })
 
   }
-  fireBaseError(code: string){
-    switch(code){
+  fireBaseError(code: string) {
+    switch (code) {
       case 'auth/email-already-in-use':
         return 'El correo utilizado ya esta registrado.'
       case 'auth/weak-password':

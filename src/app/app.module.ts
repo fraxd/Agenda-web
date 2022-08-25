@@ -39,6 +39,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
     ToastrModule.forRoot(), // ToastrModule added
 
   ],
+  exports: [],
   providers: [],
   bootstrap: [AppComponent]
 })

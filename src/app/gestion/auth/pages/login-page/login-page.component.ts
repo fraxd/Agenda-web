@@ -15,36 +15,41 @@ export class LoginPageComponent implements OnInit {
 
   usuario!: LoginData;
 
-  constructor(private readonly fb: FormBuilder, private authService:AuthService, private readonly router: Router) { }
+  loading: boolean = false;
+
+  constructor(private readonly fb: FormBuilder, private authService: AuthService, private readonly router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = this.initForm();
-    this.authService.userIsLogged();   
+    this.authService.userIsLogged();
   }
   // Login
   onSubmit(): void {
-    console.log('form->', this.loginForm.value);
+    //console.log('form->', this.loginForm.value);
     const usuario = this.loginForm.value;
-    this.authService.login(usuario).then(res =>{
-        console.log ("se registro correctaente",res);
-        this.router.navigate(['/dashboard']);
+    this.loading = true;
+    this.authService.login(usuario).then(res => {
+      console.log("se registro correctaente", res);
+      this.router.navigate(['/dashboard']);
+    }).catch((error)=> {
+      this.loading = false;
     })
 
   }
   /// inicializacion del formulario
-  initForm(): FormGroup{
+  initForm(): FormGroup {
     return this.fb.group({
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(8)]]
-      })
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]]
+    })
   }
 
   // Ingreso con google 
-  ingresarGoogle(){
+  ingresarGoogle() {
     // return this.authService.GoogleAuth();
-    this.authService.loginWithGoogle().then(res =>{
-        console.log ("se inicio correctaente con google",res);
-        this.router.navigate(['/dashboard']);
+    this.authService.loginWithGoogle().then(res => {
+      console.log("se inicio correctaente con google", res);
+      this.router.navigate(['/dashboard']);
 
     })
 

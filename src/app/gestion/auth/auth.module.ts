@@ -6,18 +6,23 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 
 @NgModule({
   declarations: [
     LoginPageComponent,
     LoginFormComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    SpinnerComponent,
   ],
   imports: [
     CommonModule,
     AuthRoutingModule,
     ReactiveFormsModule,
+    
+    
+    
   ]
 })
 export class AuthModule { }

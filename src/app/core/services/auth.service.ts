@@ -14,12 +14,7 @@ export class AuthService {
   constructor(private afauth: AngularFireAuth) { }
 
   async login( {email, password} : LoginData){
-    try {
       return await this.afauth.signInWithEmailAndPassword(email,password);
-    } catch (error) {
-      console.log("Error en Login", error);
-      return null;
-    }
   }
 
   async register( {email, password} : LoginData){
