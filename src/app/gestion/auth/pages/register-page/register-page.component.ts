@@ -42,14 +42,14 @@ export class RegisterPageComponent implements OnInit {
     this.loading = true;
 
     this.authService.register(this.usuario).then(res => {
-      console.log("se registro correctaente", res);
+      //console.log("se registro correctaente", res);
       this.loading = false;
       this.router.navigate(['/login']);
-      this.toastr.success('El usuario fue registrad exitosamente','Usuario registrado');
+      this.toastr.success('El usuario fue registrad exitosamente', 'Usuario registrado');
     }).catch((error) => {
-      console.log(error);
+      //console.log(error);
       this.loading = false;
-      this.toastr.error(this.fireBaseError(error.code), 'Error');
+      this.toastr.error(this.authService.fireBaseError(error.code), 'Error');
 
     })
 
@@ -71,18 +71,6 @@ export class RegisterPageComponent implements OnInit {
       console.log("se inicio correctaente con google", res);
     })
 
-  }
-  fireBaseError(code: string) {
-    switch (code) {
-      case 'auth/email-already-in-use':
-        return 'El correo utilizado ya esta registrado.'
-      case 'auth/weak-password':
-        return 'La contraseña definida es muy debil.'
-      case 'auth/invalid-email':
-        return 'El correo no esta en el formato correcto'
-      default:
-        return 'Error Desconocido'
-    }
   }
 
 }

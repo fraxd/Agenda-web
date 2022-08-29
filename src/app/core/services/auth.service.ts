@@ -13,21 +13,16 @@ export class AuthService {
 
   constructor(private afauth: AngularFireAuth) { }
 
-  async login( {email, password} : LoginData){
-      return await this.afauth.signInWithEmailAndPassword(email,password);
+  async login({ email, password }: LoginData) {
+    return await this.afauth.signInWithEmailAndPassword(email, password);
+    
   }
 
-  async register( {email, password} : LoginData){
-    //try {
-      return await this.afauth.createUserWithEmailAndPassword(email,password).then((user) => {
-        console.log(user);
-      })
-  /*
-    } catch (error) {
-      console.log("Error en registro ", error);
-      this.fireBaseError(error.code);
-      return null;
-    }*/
+  async register({ email, password }: LoginData) {
+    return await this.afauth.createUserWithEmailAndPassword(email, password).then((user) => {
+      console.log(user);
+    })
+
   }
 
   async loginWithGoogle() {
@@ -37,14 +32,14 @@ export class AuthService {
       console.log("Error en Login con google ", error);
       return null;
     }
-    
+
   }
 
-  getUserLogged(){
+  getUserLogged() {
     return this.afauth.authState;
   }
 
-  userIsLogged(){
+  userIsLogged() {
     this.afauth.authState.subscribe(res => {
       if (res && res.uid) {
         console.log('user is logged in');
@@ -54,14 +49,28 @@ export class AuthService {
     });
   }
 
-  logOut(){
+  logOut() {
     this.afauth.signOut();
   }
 
-  fireBaseError(code: string){
-    switch(code){
+  fireBaseError(code: string) {
+
+    switch (code) {
+      // Correo ya existe
       case 'auth/email-already-in-use':
         return 'El correo utilizado ya esta registrado.'
+      // Contraseña Debil
+      case 'auth/weak-password':
+        return 'La contraseña definida es muy debil.'
+      // Correo Invalido
+      case 'auth/invalid-email':
+        return 'El correo no esta en el formato correcto'
+      // Contraseña incorrecta
+      case 'auth/wrong-password':
+        return 'La Contraseña no es valida.'
+      // Usuario no existe
+      case 'auth/user-not-found':
+        return 'El usuario no existe.'
       default:
         return 'Error Desconocido'
     }

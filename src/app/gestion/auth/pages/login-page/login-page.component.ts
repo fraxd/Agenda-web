@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { LoginData } from 'src/app/core/interfaces/login-data.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -17,7 +18,7 @@ export class LoginPageComponent implements OnInit {
 
   loading: boolean = false;
 
-  constructor(private readonly fb: FormBuilder, private authService: AuthService, private readonly router: Router) { }
+  constructor(private readonly fb: FormBuilder, private authService: AuthService, private readonly router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.loginForm = this.initForm();
@@ -31,8 +32,9 @@ export class LoginPageComponent implements OnInit {
     this.authService.login(usuario).then(res => {
       console.log("se registro correctaente", res);
       this.router.navigate(['/dashboard']);
-    }).catch((error)=> {
+    }).catch(error => {
       this.loading = false;
+      this.toastr.error(this.authService.fireBaseError(error.code), 'Error');
     })
 
   }
