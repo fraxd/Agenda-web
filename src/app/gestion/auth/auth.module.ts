@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { RecuperarPasswordComponent } from './pages/recuperar-password/recuperar-password.component';
+import { VerificarEmailComponent } from './pages/verificar-email/verificar-email.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { RecuperarPasswordComponent } from './pages/recuperar-password/recuperar
     LoginFormComponent,
     RegisterPageComponent,
     SpinnerComponent,
-    RecuperarPasswordComponent
+    RecuperarPasswordComponent,
+    VerificarEmailComponent
   ],
   imports: [
     CommonModule,

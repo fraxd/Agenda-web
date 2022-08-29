@@ -45,7 +45,9 @@ export class RegisterPageComponent implements OnInit {
       //console.log("se registro correctaente", res);
       this.loading = false;
       this.router.navigate(['/login']);
-      this.toastr.success('El usuario fue registrad exitosamente', 'Usuario registrado');
+      this.authService.verifyEmail();
+      //this.toastr.success('El usuario fue registrado exitosamente', 'Usuario registrado');
+      this.toastr.info('Le enviamos un correo para verificar su correo', 'Verificar Correo');
     }).catch((error) => {
       //console.log(error);
       this.loading = false;

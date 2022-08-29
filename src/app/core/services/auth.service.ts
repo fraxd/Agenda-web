@@ -24,7 +24,7 @@ export class AuthService {
     })
 
   }
-
+  //Inicio con google
   async loginWithGoogle() {
     try {
       return await this.afauth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
@@ -34,11 +34,11 @@ export class AuthService {
     }
 
   }
-
+  // Retorna Usuario
   getUserLogged() {
     return this.afauth.authState;
   }
-
+  // retorna console log si el usuario esta o no conectado
   userIsLogged() {
     this.afauth.authState.subscribe(res => {
       if (res && res.uid) {
@@ -48,7 +48,12 @@ export class AuthService {
       }
     });
   }
+  //Envio correo para verificacion de usuario
+  verifyEmail(){
+    this.afauth.currentUser.then(user => user?.sendEmailVerification());
+  }
 
+  //Cerrar sesion
   logOut() {
     this.afauth.signOut();
   }
@@ -75,6 +80,8 @@ export class AuthService {
         return 'Error Desconocido'
     }
   }
+
+
 
 
 }

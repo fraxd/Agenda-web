@@ -11,21 +11,25 @@
                     <input class="form-control m-1" type="Email" placeholder="Ingree su Email" required
                         formControlName="email">
                     <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['required'] "
-                        class="alert alert-warning"> Este campo es Requerido</div>
+                        class="text-danger"> Este campo es Requerido</div>
                     <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['email'] "
-                        class="alert alert-warning"> ¿Esta bien escrito el correo? </div>
+                        class="text-danger"> ¿Esta bien escrito el correo? </div>
 
                     <label style="float: left ;">Contraseña</label>
                     <input class="form-control m-1" type="Password" placeholder="Ingrese su contraseña" required
                         formControlName="password">
                     <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['required'] "
-                        class="alert alert-warning"> Este campo es Requerido</div>
+                        class="text-danger"> Este campo es Requerido</div>
                     <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['minlength'] "
-                        class="alert alert-warning"> Ups' tu contraseña es muy corta </div>
+                        class="text-danger"> Ups' tu contraseña es muy corta </div>
 
                     <label style="float: left ;">Confirmar Contraseña</label>
                     <input class="form-control m-1" type="Password" placeholder="Ingrese su contraseña nuevamente"
                         required formControlName="confirmPassword">
+                    <div *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.errors?.['required'] "
+                        class="text-danger"> Este campo es Requerido</div>
+                    <div *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.errors?.['minlength'] "
+                        class="text-danger"> Ups' tu contraseña es muy corta </div>
 
                     <button type="submit" class="btn btn-primary w-100 mt-3"
                         [disabled]="registerForm.invalid">Ingresar</button>

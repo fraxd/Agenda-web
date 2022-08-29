@@ -30,8 +30,13 @@ export class LoginPageComponent implements OnInit {
     const usuario = this.loginForm.value;
     this.loading = true;
     this.authService.login(usuario).then(res => {
-      console.log("se registro correctaente", res);
-      this.router.navigate(['/dashboard']);
+
+      if(res.user?.emailVerified){
+        this.router.navigate(['/dashboard']);
+      } else{
+        this.authService.logOut();
+        this.router.navigate(['/verificar-email']);
+      }
     }).catch(error => {
       this.loading = false;
       this.toastr.error(this.authService.fireBaseError(error.code), 'Error');
