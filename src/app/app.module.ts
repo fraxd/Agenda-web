@@ -18,12 +18,20 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { NoPageFoundComponent } from './gestion/no-page-found/no-page-found.component';
+import { BreadcumbsComponent } from './shared/breadcumbs/breadcumbs.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { HeaderComponent } from './shared/header/header.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    NoPageFoundComponent,
+    BreadcumbsComponent,
+    SidebarComponent,
+    HeaderComponent,
 
   ],
   imports: [

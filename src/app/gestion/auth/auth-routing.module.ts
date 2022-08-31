@@ -6,7 +6,7 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
 import { VerificarEmailComponent } from './pages/verificar-email/verificar-email.component';
 
 const routes: Routes = [
-  { path: '', component: LoginPageComponent },
+  { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterPageComponent },
   { path: 'recuperar', component: RecuperarPasswordComponent },
   { path: 'verificar-email', component: VerificarEmailComponent },
