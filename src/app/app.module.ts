@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
 
 //Componentes
@@ -15,24 +15,20 @@ import { AppComponent } from './app.component';
 
 //OTROS
 import { environment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideAuth,getAuth, AuthModule } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { NoPageFoundComponent } from './gestion/no-page-found/no-page-found.component';
-import { BreadcumbsComponent } from './shared/breadcumbs/breadcumbs.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { HeaderComponent } from './shared/header/header.component';
+import { PagesComponent } from './gestion/pages.component';
+import { SharedModule } from './shared/shared.module';
+import { PagesModule } from './gestion/pages.module';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NoPageFoundComponent,
-    BreadcumbsComponent,
-    SidebarComponent,
-    HeaderComponent,
-
+    
   ],
   imports: [
     BrowserModule,
@@ -45,6 +41,11 @@ import { HeaderComponent } from './shared/header/header.component';
     AngularFireModule.initializeApp(environment.firebase),
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
+    FormsModule,
+    ReactiveFormsModule,
+    AuthModule,
+    SharedModule,
+    PagesModule
 
   ],
   exports: [],

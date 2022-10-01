@@ -24,9 +24,14 @@ import { VerificarEmailComponent } from './pages/verificar-email/verificar-email
     CommonModule,
     AuthRoutingModule,
     ReactiveFormsModule,
-    
-    
-    
+  ],
+  exports: [
+    LoginPageComponent,
+    LoginFormComponent,
+    RegisterPageComponent,
+    SpinnerComponent,
+    RecuperarPasswordComponent,
+    VerificarEmailComponent
   ]
 })
 export class AuthModule { }
