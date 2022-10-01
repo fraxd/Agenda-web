@@ -31,7 +31,8 @@ import { VerificarEmailComponent } from './pages/verificar-email/verificar-email
     RegisterPageComponent,
     SpinnerComponent,
     RecuperarPasswordComponent,
-    VerificarEmailComponent
+    VerificarEmailComponent,
+    ReactiveFormsModule
   ]
 })
 export class AuthModule { }

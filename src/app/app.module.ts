@@ -18,8 +18,6 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth, AuthModule } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { NoPageFoundComponent } from './gestion/no-page-found/no-page-found.component';
-import { PagesComponent } from './gestion/pages.component';
 import { SharedModule } from './shared/shared.module';
 import { PagesModule } from './gestion/pages.module';
 
@@ -41,8 +39,8 @@ import { PagesModule } from './gestion/pages.module';
     AngularFireModule.initializeApp(environment.firebase),
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
-    FormsModule,
     ReactiveFormsModule,
+    /// MODULOS DE COMPONENTES
     AuthModule,
     SharedModule,
     PagesModule

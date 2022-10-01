@@ -4,6 +4,9 @@ import { PagesComponent } from './pages.component';
 import { NoPageFoundComponent } from './no-page-found/no-page-found.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { ProgressComponent } from './pages/progress/progress.component';
+import { FormsModule } from '@angular/forms';
+import { ComponentsModule } from '../components/components.module';
 
 
 
@@ -11,6 +14,7 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     PagesComponent,
     NoPageFoundComponent,
+    ProgressComponent,
   ],
   exports: [
     PagesComponent,
@@ -18,8 +22,10 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    ComponentsModule
   ]
 })
 export class PagesModule { }
