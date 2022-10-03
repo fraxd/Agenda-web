@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { ChartData, ChartEvent, ChartType } from 'chart.js';
 
@@ -14,9 +14,14 @@ export class DonutGraphComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  @Input() title: string = 'Sin titulo';
+  @Input() labels: string[] = ['','',''];
+ 
+
   // Doughnut
-  public doughnutChartLabels: string[] = [ 'Download Sales', 'In-Store Sales', 'Mail-Order Sales' ];
-  public doughnutChartData: ChartData<'doughnut'> = {
+  @Input('labels') doughnutChartLabels: string[] = [ 'Data1', 'data2', 'Data3' ];
+  @Input('Data') doughnutChartData: ChartData<'doughnut'> = {
     labels: this.doughnutChartLabels,
     datasets: [
       { data: [ 350, 450, 100 ] },

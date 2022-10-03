@@ -1,9 +1,13 @@
 <div class="row">
     <div class="col-6">
-        <app-donut-graph></app-donut-graph>
+        <app-donut-graph title="Ventas"></app-donut-graph>
     </div>
     <div class="col-6">
-        <app-donut-graph></app-donut-graph>
+        <app-donut-graph
+            [labels]="labels1"
+            [Data]="data">
+
+        </app-donut-graph>
     </div> 
     <div class="col-6">
         <app-donut-graph></app-donut-graph>
