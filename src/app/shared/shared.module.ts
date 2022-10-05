@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { BreadcumbsComponent } from './breadcumbs/breadcumbs.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
+import { RouterModule } from '@angular/router';
+
 
 
 
@@ -11,6 +13,7 @@ import { HeaderComponent } from './header/header.component';
     BreadcumbsComponent,
     SidebarComponent,
     HeaderComponent ,
+    
   ],
   exports: [
     BreadcumbsComponent,
@@ -18,7 +21,8 @@ import { HeaderComponent } from './header/header.component';
     HeaderComponent ,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ]
 })
 export class SharedModule { }

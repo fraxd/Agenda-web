@@ -8,11 +8,16 @@ const routes: Routes = [
   // path: /auth AuthRoutingModule
   // path: /dashBoard pagesRoutingModule
 
-  
+  {
+    path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full'
+  },
   {
     path: '**',
     component: NoPageFoundComponent,
   },
+
 ];
 @NgModule({
   imports: [

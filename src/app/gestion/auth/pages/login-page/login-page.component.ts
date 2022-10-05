@@ -26,7 +26,8 @@ export class LoginPageComponent implements OnInit {
   }
   // Login
   onSubmit(): void {
-    //console.log('form->', this.loginForm.value);
+    console.log('form->', this.loginForm.value);
+    console.log('estamos bien los 33')
     const usuario = this.loginForm.value;
     this.loading = true;
     this.authService.login(usuario).then(res => {
@@ -41,7 +42,7 @@ export class LoginPageComponent implements OnInit {
       this.loading = false;
       this.toastr.error(this.authService.fireBaseError(error.code), 'Error');
     })
-
+    
   }
   /// inicializacion del formulario
   initForm(): FormGroup {

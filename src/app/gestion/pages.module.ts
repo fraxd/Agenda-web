@@ -15,6 +15,7 @@ import { NoPageFoundComponent } from './no-page-found/no-page-found.component';
 import { ProgressComponent } from './pages/progress/progress.component';
 import { Grafica1Component } from './pages/grafica1/grafica1.component';
 import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
+import { PromesasComponent } from './pages/promesas/promesas.component';
 
 
 
@@ -25,6 +26,7 @@ import { AccountSettingsComponent } from './pages/account-settings/account-setti
     ProgressComponent,
     Grafica1Component,
     AccountSettingsComponent,
+    PromesasComponent,
   ],
   exports: [
     PagesComponent,

@@ -15,11 +15,12 @@ import { AppComponent } from './app.component';
 
 //OTROS
 import { environment } from '../environments/environment';
-import { provideAuth,getAuth, AuthModule } from '@angular/fire/auth';
+import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { SharedModule } from './shared/shared.module';
 import { PagesModule } from './gestion/pages.module';
+import { AuthModule } from './gestion/auth/auth.module'
 
 
 
@@ -41,9 +42,10 @@ import { PagesModule } from './gestion/pages.module';
     ToastrModule.forRoot(), // ToastrModule added
     ReactiveFormsModule,
     /// MODULOS DE COMPONENTES
-    AuthModule,
     SharedModule,
-    PagesModule
+    PagesModule,
+    AuthModule
+    
 
   ],
   exports: [],

@@ -1,28 +1,25 @@
 import { Routes, RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { ProgressComponent } from './pages/progress/progress.component';
 import { Grafica1Component } from './pages/grafica1/grafica1.component';
+import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
+import { PromesasComponent } from './pages/promesas/promesas.component';
 
 
 
 const routes: Routes = [
   {
 
-    path: '',
+    path: 'dashboard',
     component: PagesComponent,
     children: [
       {
-        path: 'dashboard',
+        path: '',
         loadChildren: () =>
           import('./pages/dashboard/dashboard.module').then(
             (m) => m.DashboardModule
           ),
-      },
-      {
-        path: '',
-        redirectTo: '/dashboard',
-        pathMatch: 'full',
       },
       {
         path: 'progress',
@@ -31,6 +28,14 @@ const routes: Routes = [
       {
         path: 'grafica1',
         component: Grafica1Component
+      },
+      {
+        path: 'account-settings',
+        component: AccountSettingsComponent
+      },
+      {
+        path: 'promesas',
+        component: PromesasComponent,
       }
     ]
   },
