@@ -17,8 +17,6 @@ export class RegisterPageComponent implements OnInit {
 
   usuario!: LoginData;
 
-  loading: boolean = false;
-
   constructor(private readonly fb: FormBuilder, private authService: AuthService, private readonly router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -28,29 +26,21 @@ export class RegisterPageComponent implements OnInit {
   }
   // registro
   onSubmit(): void {
-    //console.log('form->', this.registerForm.value);
+    const nombre = this.registerForm.value.nombre;
     const email = this.registerForm.value.email;
     const password = this.registerForm.value.password;
     const confirmPassword = this.registerForm.value.confirmPassword;
     this.usuario = { email, password };
-
     if (password !== confirmPassword) {
       this.toastr.error('Las contraseñas ingresadas deben coincidir', 'Error');
       return;
     }
 
-    this.loading = true;
 
-    this.authService.register(this.usuario).then(res => {
-      //console.log("se registro correctaente", res);
-      this.loading = false;
+    this.authService.register(this.usuario,nombre).then(res => {
       this.router.navigate(['/login']);
-      this.authService.verifyEmail();
-      //this.toastr.success('El usuario fue registrado exitosamente', 'Usuario registrado');
       this.toastr.info('Le enviamos un correo para verificar su correo', 'Verificar Correo');
     }).catch((error) => {
-      //console.log(error);
-      this.loading = false;
       this.toastr.error(this.authService.fireBaseError(error.code), 'Error');
 
     })
@@ -59,6 +49,8 @@ export class RegisterPageComponent implements OnInit {
   /// inicializacion del formulario
   initForm(): FormGroup {
     return this.fb.group({
+
+      nombre: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(8)]]

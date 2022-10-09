@@ -1,29 +1,101 @@
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { LoginData } from '../interfaces/login-data.interface';
-import { user } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import {AngularFirestore,AngularFirestoreDocument,} from '@angular/fire/compat/firestore';
+import {User} from '../interfaces/User.interface'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private afauth: AngularFireAuth) { }
+  private userData: any;
 
-  async login({ email, password }: LoginData) {
-    return await this.afauth.signInWithEmailAndPassword(email, password);
+  constructor(
+    public afauth: AngularFireAuth,  // inyeccion del servicio de fireAuth
+    public afs: AngularFirestore,  // inyeccion de servicio de firestore 
+    public router: Router,
+    public ngZone: NgZone
+    ) { 
+      // Almecena en el local storage la informacion del usuario cuando inicia o cierra sesion
+      this.afauth.authState.subscribe( (user) =>{
+        if(user){
+          this.userData = user;
+          localStorage.setItem('user',JSON.stringify(this.userData));
+          JSON.parse(localStorage.getItem('User')!);
+        } else{
+          localStorage.setItem('user','null');
+          JSON.parse(localStorage.getItem('user')!);
+        }
+      });
+    }
+
+  // METODO ORIGINAL
+  // async login({ email, password }: LoginData) {
+    //   return await this.afauth.signInWithEmailAndPassword(email, password);
+    // }
     
+    // async register({ email, password }: LoginData) {
+    //   return await this.afauth.createUserWithEmailAndPassword(email, password).then((user) => {
+    //     console.log(user);
+    //   })
+  
+    // }
+    // METODO LOGIN DE PRUEBA ********
+    login({email,password}:LoginData) {
+      return this.afauth.signInWithEmailAndPassword(email,password)
+                  .then( (result) =>{
+                    this.setUserData(result.user);
+                    return result;
+                  })
+                  .catch( (error) =>{
+                    return error;
+                  });
+    }
+    // Metodo Register prueba
+    register({email,password}: LoginData, nombre:string){ 
+      return this.afauth.createUserWithEmailAndPassword(email,password)
+                  .then( (result) =>{
+                    this.verifyEmail();
+                    this.setUserData(result.user,nombre);
+                    return result;
+                  })
+                  .catch( (error)=>{
+                    return error;
+                  })
+
+    }
+      // Returns true when user is looged in and email is verified
+  get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem('user')!);
+    return user !== null && user.emailVerified !== false ? true : false;
   }
 
-  async register({ email, password }: LoginData) {
-    return await this.afauth.createUserWithEmailAndPassword(email, password).then((user) => {
-      console.log(user);
-    })
+    // Ingresando datos a la DB de Firestore
+    setUserData(user: any, nombre?: string){
+      const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+        `users/${user.uid}`
+        );
+        const userData: User = {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          emailVerified: user.emailVerified,
+        };
+        if(nombre){
+          userData.displayName = nombre;
+          console.log(userData.displayName);
+        } 
+      return userRef.set(userData, {
+        merge: true,
+      });
+    }
 
-  }
+
   //Inicio con google
   async loginWithGoogle() {
     try {
@@ -38,16 +110,6 @@ export class AuthService {
   getUserLogged() {
     return this.afauth.authState;
   }
-  // retorna console log si el usuario esta o no conectado
-  userIsLogged() {
-    this.afauth.authState.subscribe(res => {
-      if (res && res.uid) {
-        console.log('user is logged in');
-      } else {
-        console.log('user not logged in');
-      }
-    });
-  }
   //Envio correo para verificacion de usuario
   verifyEmail(){
     this.afauth.currentUser.then(user => user?.sendEmailVerification());
@@ -55,7 +117,9 @@ export class AuthService {
 
   //Cerrar sesion
   logOut() {
-    this.afauth.signOut();
+    this.afauth.signOut().then(() =>{
+      localStorage.removeItem('User');
+    });
   }
 
   fireBaseError(code: string) {

@@ -16,6 +16,8 @@ import { ProgressComponent } from './pages/progress/progress.component';
 import { Grafica1Component } from './pages/grafica1/grafica1.component';
 import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
 import { PromesasComponent } from './pages/promesas/promesas.component';
+import { RxjsComponent } from './pages/rxjs/rxjs.component';
+import { AgendaDisponibleComponent } from './pages/agenda-disponible/agenda-disponible.component';
 
 
 
@@ -27,6 +29,8 @@ import { PromesasComponent } from './pages/promesas/promesas.component';
     Grafica1Component,
     AccountSettingsComponent,
     PromesasComponent,
+    RxjsComponent,
+    AgendaDisponibleComponent,
   ],
   exports: [
     PagesComponent,

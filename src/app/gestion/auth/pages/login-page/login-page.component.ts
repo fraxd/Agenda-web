@@ -22,15 +22,13 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.initForm();
-    this.authService.userIsLogged();
+    console.log('El usuario esta activo?', this.authService.isLoggedIn );
   }
   // Login
   onSubmit(): void {
-    console.log('form->', this.loginForm.value);
-    console.log('estamos bien los 33')
     const usuario = this.loginForm.value;
     this.loading = true;
-    this.authService.login(usuario).then(res => {
+    this.authService.login(usuario).then( (res) => {
 
       if(res.user?.emailVerified){
         this.router.navigate(['/dashboard']);
@@ -62,5 +60,6 @@ export class LoginPageComponent implements OnInit {
     })
 
   }
+
 
 }
