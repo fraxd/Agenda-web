@@ -6,6 +6,8 @@ import { LoginData } from '../interfaces/login-data.interface';
 import { Router } from '@angular/router';
 import {AngularFirestore,AngularFirestoreDocument,} from '@angular/fire/compat/firestore';
 import {User} from '../interfaces/User.interface'
+import { ToastrService } from 'ngx-toastr';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +20,24 @@ export class AuthService {
     public afauth: AngularFireAuth,  // inyeccion del servicio de fireAuth
     public afs: AngularFirestore,  // inyeccion de servicio de firestore 
     public router: Router,
-    public ngZone: NgZone
+    public ngZone: NgZone,
+    private toastr: ToastrService
     ) { 
       // Almecena en el local storage la informacion del usuario cuando inicia o cierra sesion
       this.afauth.authState.subscribe( (user) =>{
         if(user){
           this.userData = user;
+          this.returnUserDb(user.uid).subscribe( (res:any)=> {
+            const userRef = res
+            const userRol = userRef.rol
+            localStorage.setItem('userRol', userRol);
+            localStorage.setItem('nombre', userRef.displayName);
+          })
+
+          // const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+          //   `users/${user.uid}`
+          //   );
+          
           localStorage.setItem('user',JSON.stringify(this.userData));
           JSON.parse(localStorage.getItem('User')!);
         } else{
@@ -33,25 +47,20 @@ export class AuthService {
       });
     }
 
-  // METODO ORIGINAL
-  // async login({ email, password }: LoginData) {
-    //   return await this.afauth.signInWithEmailAndPassword(email, password);
-    // }
-    
-    // async register({ email, password }: LoginData) {
-    //   return await this.afauth.createUserWithEmailAndPassword(email, password).then((user) => {
-    //     console.log(user);
-    //   })
-  
-    // }
     // METODO LOGIN DE PRUEBA ********
     login({email,password}:LoginData) {
-      return this.afauth.signInWithEmailAndPassword(email,password)
+      this.afauth.signInWithEmailAndPassword(email,password)
                   .then( (result) =>{
-                    this.setUserData(result.user);
-                    return result;
+                    //this.setUserData(result.user);
+                    if(result.user?.emailVerified){
+                      this.router.navigate(['/dashboard']);
+                    } else{
+                      this.logOut();
+                      this.router.navigate(['/verificar-email']);
+                    }
                   })
                   .catch( (error) =>{
+                    this.toastr.error(this.fireBaseError(error.code), 'Error');
                     return error;
                   });
     }
@@ -75,7 +84,7 @@ export class AuthService {
   }
 
     // Ingresando datos a la DB de Firestore
-    setUserData(user: any, nombre?: string){
+    setUserData(user: any, nombre?: string, rol?: string){
       const userRef: AngularFirestoreDocument<any> = this.afs.doc(
         `users/${user.uid}`
         );
@@ -85,11 +94,13 @@ export class AuthService {
           displayName: user.displayName,
           photoURL: user.photoURL,
           emailVerified: user.emailVerified,
+          rol: 'paciente'
         };
         if(nombre){
           userData.displayName = nombre;
           console.log(userData.displayName);
         } 
+        if(rol)userData.rol = rol;  // existen 3 roles: Admin, profesional y paciente
       return userRef.set(userData, {
         merge: true,
       });
@@ -119,8 +130,22 @@ export class AuthService {
   logOut() {
     this.afauth.signOut().then(() =>{
       localStorage.removeItem('User');
-    });
+     
+    }).then( ()=>{
+      this.router.navigate(['/login']);
+    })
+
   }
+
+  // Retorna el usuario desde firestore 
+  returnUserDb(uid:string){
+    return this.afs
+            .collection('users')
+            .doc(uid)
+            .valueChanges()
+  }
+
+
 
   fireBaseError(code: string) {
 

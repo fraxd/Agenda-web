@@ -1,8 +1,11 @@
 //Modulos de angular nativos
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // MODULOS EXTERNOS
+import { CheckboxModule } from 'primeng/checkbox';
+import {ButtonModule} from 'primeng/button';
+import {StepsModule} from 'primeng/steps';
 
 // Modulos mios
 import { ComponentsModule } from '../components/components.module';
@@ -17,7 +20,9 @@ import { Grafica1Component } from './pages/grafica1/grafica1.component';
 import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
 import { PromesasComponent } from './pages/promesas/promesas.component';
 import { RxjsComponent } from './pages/rxjs/rxjs.component';
-import { AgendaDisponibleComponent } from './pages/agenda-disponible/agenda-disponible.component';
+import { AgendaDisponibleComponent } from './pages/Profesionales/agenda-disponible/agenda-disponible.component';
+import { DisponibilidadHorariaComponent } from './pages/Profesionales/disponibilidad-horaria/disponibilidad-horaria.component';
+import { DisponibilidadModule } from './pages/Profesionales/disponibilidad-horaria/disponibilidad.module';
 
 
 
@@ -31,6 +36,7 @@ import { AgendaDisponibleComponent } from './pages/agenda-disponible/agenda-disp
     PromesasComponent,
     RxjsComponent,
     AgendaDisponibleComponent,
+    DisponibilidadHorariaComponent
   ],
   exports: [
     PagesComponent,
@@ -39,12 +45,20 @@ import { AgendaDisponibleComponent } from './pages/agenda-disponible/agenda-disp
 
   ],
   imports: [
+
     CommonModule,
     FormsModule,
     AppRoutingModule,
     SharedModule,
     ComponentsModule,
+    ReactiveFormsModule,
+    CheckboxModule,
+    ButtonModule,
+    StepsModule,
+    DisponibilidadModule
     
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
 })
 export class PagesModule { }

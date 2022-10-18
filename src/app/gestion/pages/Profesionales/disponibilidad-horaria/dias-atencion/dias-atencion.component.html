@@ -1,0 +1,26 @@
+<div class="col-12">
+    <div class="card">
+        <br>
+        <form [formGroup]="diasForm" (ngSubmit)="submit()"  >
+            <div class="input-group">
+                <h5> &nbsp; Indicar sus días de atencion</h5>
+                <ul class="icheck-list">
+                    <div *ngFor="let dia of dias let i=index" >
+                        <p-checkbox name={{dia.name}} value={{dia.value}} 
+                                    label={{dia.name}} 
+                                    (onChange)="onCheckboxChange($event, dia.name)" 
+                                    > 
+                        </p-checkbox>
+                    </div>   
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-sm-9">
+                </div>
+                <div class="col-sm-3">
+                    <p-button class="button text-right" type="submit" label="Guardar" ></p-button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+<p-card header="Configuracion">
+        <div class="col-12">
+            <label>Defina la duracion de su consulta:   &nbsp; &nbsp;&nbsp;</label>
+            <p-dropdown [options]="tiempo" 
+                        [(ngModel)]="duracion" 
+                        optionLabel="name"  
+                        placeholder="Duracion Consulta"
+                        [showClear]="true">
+            </p-dropdown>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-sm-3">
+                <h6>Valor de la Consulta: &nbsp;&nbsp;&nbsp;</h6    >
+            </div>
+            <div class="col-sm-9">
+                <p-inputNumber [(ngModel)]="dinero" 
+                                mode="currency" 
+                                currency="CLP" 
+                                locale="es-CL" 
+                                [min]="5000" 
+                                (onInput)="comisionCalcular($event.value)">
+                </p-inputNumber>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-3">
+                <label >Comision Plataforma {{comision}}% :</label>
+            </div>
+            <div class="col-sm-9">
+                <p-inputNumber [(ngModel)]="montoComision" value="montoComision"  mode="currency" currency="CLP" locale="es-CL" [readonly]="true"></p-inputNumber>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-3">
+                <label >Monto a Recibir:</label>
+            </div>
+            <div class="col-sm-9">
+                <p-inputNumber [(ngModel)]="dineroNeto" value="dineroNeto" mode="currency" currency="CLP" locale="es-CL" [readonly]="true"></p-inputNumber>
+            </div>
+        </div>
+        <br><br>
+        <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+        <div class="row">
+            <div class="col-sm-9">
+                <p-button class="button" label="retroceder" (onClick)="retroceder()"></p-button>
+            </div>
+            <div class="col-sm-3">
+                <button (click)="confirm()" pButton icon="pi pi-check" label="Guardar"></button>
+            </div>
+           
+        </div>
+
+
+
+    <br>
+
+
+</p-card>

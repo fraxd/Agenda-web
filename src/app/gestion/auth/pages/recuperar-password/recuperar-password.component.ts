@@ -13,9 +13,13 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class RecuperarPasswordComponent implements OnInit {
 
   recuperarUsuario: FormGroup;
-  loading: boolean = false;
 
-  constructor(private readonly fb: FormBuilder, private authService: AuthService, private readonly router: Router, private toastr: ToastrService, private afAuth: AngularFireAuth) {
+  constructor(
+    private readonly fb: FormBuilder, 
+    private authService: AuthService, 
+    private readonly router: Router, 
+    private toastr: ToastrService, 
+    private afAuth: AngularFireAuth) {
 
     this.recuperarUsuario =this.fb.group({
       email: ['', Validators.required]
@@ -27,12 +31,10 @@ export class RecuperarPasswordComponent implements OnInit {
 
   onSubmit(){
     const email = this.recuperarUsuario.value.email;
-    this.loading = true;
     this.afAuth.sendPasswordResetEmail(email).then(() => {
       this.toastr.info('¡Te hemos enviado un correo!','Recuperar Contraseña')
       this.router.navigate(['/login']);
     }).catch((error) =>{
-      this.loading = false;
       this.toastr.error(this.authService.fireBaseError(error.code), 'Error');
     })
   }

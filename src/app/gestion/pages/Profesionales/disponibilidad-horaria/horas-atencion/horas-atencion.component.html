@@ -1,0 +1,36 @@
+<p-card >
+    <h6 class="text-center"><b> Defina su horario de atencion semanal </b></h6>
+    <br>
+    <div class="grid form-grid" *ngFor="let dia of diasOrder let i= index">
+        <h6>Horario para el dia {{dia}}</h6>
+        <label for="hora-inicio">Hora Inicio atencion </label>
+        <p-calendar class="col-12" [(ngModel)]="horaInicio[i]"  
+                                    [timeOnly]="true" 
+                                    inputId="hora-inico" 
+                                    [stepMinute]=15 
+                                    placeholder="HH:MM"	
+                                    >
+        </p-calendar>
+        <label for="hora-fin">Hora Ultima Atencion</label>
+        <p-calendar class="col-12" [(ngModel)]="horaFin[i]"  
+                                    [timeOnly]="true" 
+                                    inputId="hora-fin"
+                                    [stepMinute]=15 
+                                    placeholder="HH:MM" >
+        </p-calendar>
+        <br><br>
+    </div>
+    <br>
+    <br><br><br> 
+    <div class="row">
+        <div class="col-sm-9">
+            <p-button class="button" label="Retroceder" (onClick)="retroceder()"></p-button>
+        </div>
+        <div class="col-sm-3">
+            <p-button class="button" label="Siguiente" (onClick)="submit()"></p-button>
+        </div>
+    </div>
+
+</p-card>
+
+    

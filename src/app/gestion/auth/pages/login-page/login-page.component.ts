@@ -18,30 +18,19 @@ export class LoginPageComponent implements OnInit {
 
   loading: boolean = false;
 
-  constructor(private readonly fb: FormBuilder, private authService: AuthService, private readonly router: Router, private toastr: ToastrService) { }
+  constructor(private readonly fb: FormBuilder, public authService: AuthService, private readonly router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.loginForm = this.initForm();
-    console.log('El usuario esta activo?', this.authService.isLoggedIn );
+    if(this.authService.isLoggedIn) this.router.navigate(['/dashboard']);
   }
   // Login
-  onSubmit(): void {
-    const usuario = this.loginForm.value;
-    this.loading = true;
-    this.authService.login(usuario).then( (res) => {
+ onSubmit(): void {
+  const usuario = this.loginForm.value;
+  this.authService.login(usuario)
+ }
 
-      if(res.user?.emailVerified){
-        this.router.navigate(['/dashboard']);
-      } else{
-        this.authService.logOut();
-        this.router.navigate(['/verificar-email']);
-      }
-    }).catch(error => {
-      this.loading = false;
-      this.toastr.error(this.authService.fireBaseError(error.code), 'Error');
-    })
-    
-  }
+ 
   /// inicializacion del formulario
   initForm(): FormGroup {
     return this.fb.group({

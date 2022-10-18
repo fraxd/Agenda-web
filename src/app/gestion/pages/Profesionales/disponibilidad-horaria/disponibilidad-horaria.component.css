@@ -1,0 +1,15 @@
+.button{
+    position: relative
+}
+
+.input-group{
+    padding-top: 1em;
+}
+
+.card{
+    border-radius:10px;
+}
+.top{
+    margin-left: 1em;
+    margin-right: 2em;
+}

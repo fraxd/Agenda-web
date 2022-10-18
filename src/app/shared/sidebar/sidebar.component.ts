@@ -13,8 +13,11 @@ export class SidebarComponent implements OnInit {
 
   menuItem:any[];
 
-  constructor(private sideBarService: SidebarService, public authService: AuthService){
+  nombre: string;
+
+  constructor(public sideBarService: SidebarService){
     this.menuItem = sideBarService.menu;
+    this.nombre = localStorage.getItem('nombre') || 'Usuario/a';
   }
 
 
