@@ -8,7 +8,7 @@
                     <div *ngFor="let dia of dias let i=index" >
                         <p-checkbox name={{dia.name}} value={{dia.value}} 
                                     label={{dia.name}} 
-                                    (onChange)="onCheckboxChange($event, dia.name)" 
+                                    (onChange)="onCheckboxChange($event, dia.name)"
                                     > 
                         </p-checkbox>
                     </div>   
@@ -22,5 +22,6 @@
                 </div>
             </div>
         </form>
+        <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
     </div>
 </div>
