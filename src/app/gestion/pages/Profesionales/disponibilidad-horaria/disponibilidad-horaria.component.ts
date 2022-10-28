@@ -10,10 +10,7 @@ export class DisponibilidadHorariaComponent implements OnInit {
 
   items: MenuItem[];
 
-  constructor() {
-    
-    
-   }
+  constructor() {}
 
   ngOnInit(): void {
     this.items = [{
@@ -31,13 +28,6 @@ export class DisponibilidadHorariaComponent implements OnInit {
         ];
   }
 
-  onSubmit(){
-    // const dias = this.disponibilidadHoraria.value.dias;
-    // const horaInicio = this.disponibilidadHoraria.value.horaInicio;
-    // const horaFin = this.disponibilidadHoraria.value.horaFin;
-
-  }
-  
 }
 
 

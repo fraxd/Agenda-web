@@ -10,10 +10,10 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AuthGuard } from '../shared/auth.guard';
 import { AgendaDisponibleComponent } from './pages/Profesionales/agenda-disponible/agenda-disponible.component';
 import { DisponibilidadHorariaComponent } from './pages/Profesionales/disponibilidad-horaria/disponibilidad-horaria.component';
-import { DisponibilidadRoutingModule } from './pages/Profesionales/disponibilidad-horaria/disponibilidad-routing.module';
 import { DiasAtencionComponent } from './pages/Profesionales/disponibilidad-horaria/dias-atencion/dias-atencion.component';
 import { HorasAtencionComponent } from './pages/Profesionales/disponibilidad-horaria/horas-atencion/horas-atencion.component';
 import { ConfiguracionComponent } from './pages/Profesionales/disponibilidad-horaria/configuracion/configuracion.component';
+import { configSessionResolver } from '../core/resolvers/configSession.resolver';
 
 
 
@@ -61,7 +61,10 @@ const routes: Routes = [
       {
         path: 'agenda-disponible',
         component: AgendaDisponibleComponent,
-        data: { titulo: 'Agenda Disponible'}
+        data: { titulo: 'Agenda Disponible'},
+        resolve: {
+          config: configSessionResolver
+        }
       },
       {
         path: 'disponibilidad',

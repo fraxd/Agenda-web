@@ -23,6 +23,8 @@ import { RxjsComponent } from './pages/rxjs/rxjs.component';
 import { AgendaDisponibleComponent } from './pages/Profesionales/agenda-disponible/agenda-disponible.component';
 import { DisponibilidadHorariaComponent } from './pages/Profesionales/disponibilidad-horaria/disponibilidad-horaria.component';
 import { DisponibilidadModule } from './pages/Profesionales/disponibilidad-horaria/disponibilidad.module';
+import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
 
 
 
@@ -55,7 +57,9 @@ import { DisponibilidadModule } from './pages/Profesionales/disponibilidad-horar
     CheckboxModule,
     ButtonModule,
     StepsModule,
-    DisponibilidadModule
+    DisponibilidadModule,
+    CalendarModule,
+    CardModule
     
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

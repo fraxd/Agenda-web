@@ -28,10 +28,10 @@ export class AuthService {
         if(user){
           this.userData = user;
           this.returnUserDb(user.uid).subscribe( (res:any)=> {
-            const userRef = res
-            const userRol = userRef.rol
-            localStorage.setItem('userRol', userRol);
+            const userRef:User = res
+            localStorage.setItem('userRol', userRef.rol);
             localStorage.setItem('nombre', userRef.displayName);
+            if(userRef.rol == 'profesional')  localStorage.setItem('Especialidad',userRef.especialidad || 'null');
           })
 
           // const userRef: AngularFirestoreDocument<any> = this.afs.doc(
@@ -84,7 +84,7 @@ export class AuthService {
   }
 
     // Ingresando datos a la DB de Firestore
-    setUserData(user: any, nombre?: string, rol?: string){
+    setUserData(user: any, nombre?: string, rol?: string, especialidad?: string){
       const userRef: AngularFirestoreDocument<any> = this.afs.doc(
         `users/${user.uid}`
         );
@@ -101,6 +101,7 @@ export class AuthService {
           console.log(userData.displayName);
         } 
         if(rol)userData.rol = rol;  // existen 3 roles: Admin, profesional y paciente
+        if(especialidad)userData.especialidad = especialidad;
       return userRef.set(userData, {
         merge: true,
       });

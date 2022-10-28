@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { DisponibilidadRoutingModule } from './disponibilidad-routing.module';
+// Routing Module de Dip
+//import { DisponibilidadRoutingModule } from './disponibilidad-routing.module';
+// Componentes 
 import { DiasAtencionComponent } from './dias-atencion/dias-atencion.component';
+import { HorasAtencionComponent } from './horas-atencion/horas-atencion.component';
+import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
+// PrimeNG modules
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
@@ -17,11 +21,6 @@ import {ConfirmationService} from 'primeng/api';
 
 
 
-import { HorasAtencionComponent } from './horas-atencion/horas-atencion.component';
-import { ConfiguracionComponent } from './configuracion/configuracion.component';
-
-
-
 
 @NgModule({
   declarations: [
@@ -31,7 +30,7 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
   ],
   imports: [
     CommonModule,
-    DisponibilidadRoutingModule,
+    // PRIMENG
     CheckboxModule,
     FormsModule,
     ReactiveFormsModule,

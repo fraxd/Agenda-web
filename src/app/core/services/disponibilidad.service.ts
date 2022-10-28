@@ -1,8 +1,9 @@
+import { Time } from '@angular/common';
 import { Injectable} from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { collection, collectionData, Firestore } from '@angular/fire/firestore';
-import { Observable, observable } from 'rxjs';
+import { User } from '@angular/fire/auth';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { configSession, horasSesion } from '../interfaces/config-sesion.interface';
+import { session } from '../interfaces/sesion.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,17 @@ import { configSession, horasSesion } from '../interfaces/config-sesion.interfac
 export class DisponibilidadService {
 
   uid: string; 
-  constructor( public afs: AngularFirestore, private firestore:Firestore ) { 
-    const user = JSON.parse(localStorage.getItem('user') || (''));
+  nombreProfesional: string;
+  especialidad: string = 'Medicina General'; // IMPLEMENTAR FUNCION QUE BUSQUE ESTO
+  
+
+
+  constructor( public afs: AngularFirestore ) { 
+    const user:User = JSON.parse(localStorage.getItem('user') || (''));
+    this.especialidad = JSON.parse(localStorage.getItem('Especialidad') || (''));
     this.uid = user.uid;
+    this.nombreProfesional = JSON.parse(localStorage.getItem('Nombre') || (''));;
+    /// verificar que se cargue el nombre correctamente
   }
 
   actualiarDatosBD(diasSelected: string[], horaInicio: Date[], horaFin: Date[], duracionTemp: number, valorTemp:number){
@@ -92,20 +101,116 @@ export class DisponibilidadService {
       valor: valorTemp
       }
 
+      // Funcion Generadora de evento en el calendario
+      //this.abrirAgenda(sessionConfig);
+
       //console.log(sessionConfig);
       return configRef.set(sessionConfig, {
         merge: true,
       });
 
+      
+
 
   }
 
-  // Pendiente la precarga de datos
-  //recibirDatosBD(): Observable<configSession[]>{
   recibirDatosBDbyUID(){
     return this.afs.collection('sessions-Config').doc(this.uid).valueChanges();
   }
 
+ 
+
+  generarAgenda(sessionConfig: horasSesion, dia: number, duracion: number){
+    let sessiones: session[] = [];
+    let flag: boolean = true;
+    let fecha: Date = new Date();
+    let difDay: number;
+    let timeCurrent: Time;
+    let timeCurrentEnd:Time;
+    let dateTemp: Date;
+    let fechaTemp: Date = new Date(sessionConfig.horaFin);
+    difDay = fecha.getDay() - dia; // lunes =1, martes = 2, miercoles = 3
+    dateTemp = new Date(sessionConfig.horaInicio);
+    timeCurrent = {hours: dateTemp.getHours(), minutes: dateTemp.getMinutes()};
+    timeCurrentEnd = timeCurrent;
+
+    if(difDay < 0)fecha.setDate(fecha.getDate() - difDay); // ajuste de fecha al dia de la sesion
+    if(difDay > 0) fecha.setDate(fecha.getDate() + (difDay+5)) ;
+
+    for (let i=0; i<4;i++) {     /// i= 1 solo para pruebas
+      while(flag){
+        timeCurrentEnd = this.timeAddition(timeCurrentEnd,duracion);
+        sessiones.push({  // Tal vez agregarle algo mas
+          nombreProfesional: this.nombreProfesional ,
+          uid: this.uid,
+          especialidad: this.especialidad, // FALTA FUNCION QUE LA TRAIGA 
+          disponible: true,
+          id: Math.random() as unknown as string, // Falta implementar generador de UID
+          title: 'Consulta',
+          start: this.timeGenerator(fecha,timeCurrent),
+          end: this.timeGenerator(fecha,timeCurrentEnd),
+          });
+        if(timeCurrentEnd.hours>fechaTemp.getHours()) flag= false;
+        else if(timeCurrentEnd.hours==fechaTemp.getHours() && 
+                timeCurrentEnd.minutes >= fechaTemp.getMinutes()) flag = false;
+
+        timeCurrent = timeCurrentEnd;
+   
+      }
+      
+      fecha.setDate(fecha.getDate()+7);
+
+    }
+
+    this.subirBD(sessiones);
+
+  }
+
+  timeGenerator(fecha: Date, time:Time){ //Genera el string con la fecha y la hora;
+    let fechaString:string = fecha.toISOString();
+    let fechaTemp:string[] = fechaString.split('T',1);
+    let fechaNueva: string;
+    if(time.minutes<10){
+      let cero: string =  String(time.minutes).padStart(2, '0');
+      fechaNueva = fechaTemp[0].concat('T',cero);
+    }
+    else{
+      fechaNueva= fechaTemp[0].concat('T',time.hours.toString());
+    }
+    fechaNueva = fechaNueva.concat(':',time.minutes.toString());
+    fechaNueva = fechaNueva.concat(':','00');
+    return fechaNueva;
+  }
+
+  // Retorna el tiempo sumado a la duracion de la sesion
+  timeAddition(timeCurrent: Time, duracion: any): Time{
+    let duracionNumber: number = parseInt(duracion);
+    let newMinutes: number = timeCurrent.minutes + duracionNumber as number;
+    let newHours: number = timeCurrent.hours as number;
+    if(newMinutes>=60){
+      newMinutes = newMinutes -60;
+      newHours++;
+    };
+    let newTime: Time = {
+      hours: newHours,
+      minutes: newMinutes
+    }
+    return newTime as Time;
+
+  }
+
+// Sube el array de sesiones a la Bd
+subirBD(sessiones :session[]){
+
+  const sessionRef: AngularFirestoreCollection<any> = this.afs.collection(`sessions/${this.especialidad}/${this.uid}`);
+  sessiones.forEach(function (sesion) {
+    sessionRef.add(sesion).catch( err => console.log(err));
+  } )
+
+  
+}
+
+// idea: Permitir al usuario definir hasta que fecha desea implementar la agenda y dar el boton para abrir agenda
 
 
 }

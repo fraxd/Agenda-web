@@ -98,10 +98,6 @@ export class DiasAtencionComponent implements OnInit {
     },
     acceptLabel: 'Si, estoy seguro.'
     });
-    // if(!this.configPrevia.lunes.activo){
-    //   this.diasSelected.push('lunes');
-    //   console.log(this.diasSelected)
-    // }
   }
 
 

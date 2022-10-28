@@ -59,12 +59,14 @@ export class ConfiguracionComponent implements OnInit {
     this.confirmationService.confirm({
         message: '¿Todos los datos estan correcto?',
         accept: () => {
-          // Falta eliminar los datos basura del localStorage y router tal vez poner un loading o spinner y mandar al dashboard
           this.dispService.actualiarDatosBD(this.diasSelected, 
                                             this.horaInicio, 
                                             this.horaFin, 
                                             this.duracion.code, 
                                             this.dinero); 
+          localStorage.removeItem('horaFin')
+          localStorage.removeItem('horaInicio')
+          localStorage.removeItem('Dias')
         }
     });
   }
