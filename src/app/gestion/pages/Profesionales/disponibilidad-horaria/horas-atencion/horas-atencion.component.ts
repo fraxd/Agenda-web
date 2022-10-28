@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { DisponibilidadService } from 'src/app/core/services/disponibilidad.service';
 
 @Component({
   selector: 'app-horas-atencion',
@@ -18,7 +17,7 @@ export class HorasAtencionComponent implements OnInit {
 
 
 
-  constructor(private dispSerive:DisponibilidadService, private toastr:ToastrService, private router:Router) {
+  constructor( private toastr:ToastrService, private router:Router) {
  
    }
 

@@ -18,10 +18,9 @@ export class DisponibilidadService {
 
   constructor( public afs: AngularFirestore ) { 
     const user:User = JSON.parse(localStorage.getItem('user') || (''));
-    this.especialidad = JSON.parse(localStorage.getItem('Especialidad') || (''));
+    this.especialidad = localStorage.getItem('Especialidad') as string;
     this.uid = user.uid;
-    this.nombreProfesional = JSON.parse(localStorage.getItem('Nombre') || (''));;
-    /// verificar que se cargue el nombre correctamente
+    this.nombreProfesional = localStorage.getItem('nombre') as string;
   }
 
   actualiarDatosBD(diasSelected: string[], horaInicio: Date[], horaFin: Date[], duracionTemp: number, valorTemp:number){
@@ -101,10 +100,6 @@ export class DisponibilidadService {
       valor: valorTemp
       }
 
-      // Funcion Generadora de evento en el calendario
-      //this.abrirAgenda(sessionConfig);
-
-      //console.log(sessionConfig);
       return configRef.set(sessionConfig, {
         merge: true,
       });

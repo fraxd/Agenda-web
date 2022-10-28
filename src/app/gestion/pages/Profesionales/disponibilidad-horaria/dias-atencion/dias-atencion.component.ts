@@ -27,7 +27,7 @@ export class DiasAtencionComponent implements OnInit {
   constructor(private readonly fb: FormBuilder, 
               private toastr: ToastrService, 
               private router: Router,
-              private dispService: DisponibilidadService,
+              //private dispService: DisponibilidadService,
               private confirmationService: ConfirmationService
             
               ) { 
@@ -39,12 +39,12 @@ export class DiasAtencionComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.dispService.recibirDatosBDbyUID ().subscribe( (config) =>{
-      this.configPrevia = config as configSession;
-      if(this.configPrevia){
-        this.setearValores(); // solo avisa que hay datos previos :(
-      }
-    });
+    // this.dispService.recibirDatosBDbyUID ().subscribe( (config) =>{
+    //   this.configPrevia = config as configSession;
+    //   if(this.configPrevia){
+    //     this.setearValores(); // solo avisa que hay datos previos :(
+    //   }
+    // });
 
 
   }
