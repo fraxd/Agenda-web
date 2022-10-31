@@ -5,6 +5,10 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { configSession, horasSesion } from '../interfaces/config-sesion.interface';
 import { session } from '../interfaces/sesion.interface';
 
+interface detalles {
+  fecha: Date;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -113,7 +117,18 @@ export class DisponibilidadService {
     return this.afs.collection('sessions-Config').doc(this.uid).valueChanges();
   }
 
- 
+  abrirAgenda(fecha?: Date[]){  // date opcional por el moento 
+    const configRef = this.afs.doc(`sessions-Config/${this.uid}`).get();
+
+    let config: configSession;
+    configRef.subscribe( res =>{
+      config = res.data() as configSession;
+      console.log(config)
+    });
+    
+    
+    
+  }
 
   generarAgenda(sessionConfig: horasSesion, dia: number, duracion: number){
     let sessiones: session[] = [];
@@ -205,7 +220,12 @@ subirBD(sessiones :session[]){
   
 }
 
-// idea: Permitir al usuario definir hasta que fecha desea implementar la agenda y dar el boton para abrir agenda
 
+  lastDayOpen(){
+  let fecha: Date = new Date(500000);
+  let info: any;
 
+  return this.afs.collection(`sessions`).doc(this.especialidad).collection(this.uid).doc(`details`).get();
+  }
 }
+   

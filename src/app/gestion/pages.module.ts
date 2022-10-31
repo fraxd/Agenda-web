@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 import {ButtonModule} from 'primeng/button';
 import {StepsModule} from 'primeng/steps';
+import {ProgressBarModule} from 'primeng/progressbar';
 
 // Modulos mios
 import { ComponentsModule } from '../components/components.module';
@@ -25,6 +26,7 @@ import { DisponibilidadHorariaComponent } from './pages/Profesionales/disponibil
 import { DisponibilidadModule } from './pages/Profesionales/disponibilidad-horaria/disponibilidad.module';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
+import { AbrirAgendaComponent } from './pages/Profesionales/abrir-agenda/abrir-agenda.component';
 
 
 
@@ -38,12 +40,14 @@ import { CardModule } from 'primeng/card';
     PromesasComponent,
     RxjsComponent,
     AgendaDisponibleComponent,
-    DisponibilidadHorariaComponent
+    DisponibilidadHorariaComponent,
+    AbrirAgendaComponent
   ],
   exports: [
     PagesComponent,
     NoPageFoundComponent,
     AccountSettingsComponent,
+    
 
   ],
   imports: [
@@ -59,7 +63,8 @@ import { CardModule } from 'primeng/card';
     StepsModule,
     DisponibilidadModule,
     CalendarModule,
-    CardModule
+    CardModule,
+    ProgressBarModule
     
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

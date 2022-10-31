@@ -1,0 +1,24 @@
+<p-card header="Apertura Agenda">
+        <div *ngIf="flag">
+                <div class="fechaPrevia" *ngIf="flagFecha">
+                        <i>Ultima fecha Aperturada: </i>
+                        <p-calendar inputId="basic" [(ngModel)]="lastDayOpen" dateFormat="dd/mm/yy" disabled=true>
+                        </p-calendar>
+                </div>
+                <i *ngIf="!flagFecha">No ha abierto su agenda Nunca.</i>
+                <br>
+                <div>
+                        <h6>Defina rango de fechas</h6>
+                        <p-calendar inputId="basic" [(ngModel)]="fecha" dateFormat="dd/mm/yy" [numberOfMonths]="2"
+                                selectionMode="range" [showOtherMonths]="false" [minDate]="fechaInicioTemp"
+                                [maxDate]="fechaFinTemp" [firstDayOfWeek]="1" [required]="true"
+                                (onClose)="eventCalendar()"></p-calendar>
+
+                </div>
+                <br>    
+                <div>
+                        <p-button label="Abrir Agenda" [disabled]="!flagButton"></p-button>
+                </div>
+        </div>
+        <p-progressBar *ngIf="!flag" mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+</p-card>

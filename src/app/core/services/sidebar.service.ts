@@ -35,7 +35,8 @@ export class SidebarService {
             submenu: [
               { titulo: 'Disponibiidad', url:'disponibilidad'},
               { titulo: 'Agenda', url:'agenda-disponible'},
-              { titulo: 'otro', url:'promesas'}
+              { titulo: 'otro', url:'promesas'},
+              { titulo: 'Abrir Agenda', url:'abrir-agenda'}
             ]
           }
         )

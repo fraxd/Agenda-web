@@ -1,5 +1,5 @@
 import { Routes, RouterModule } from '@angular/router';
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { ProgressComponent } from './pages/progress/progress.component';
 import { Grafica1Component } from './pages/grafica1/grafica1.component';
@@ -14,6 +14,8 @@ import { DiasAtencionComponent } from './pages/Profesionales/disponibilidad-hora
 import { HorasAtencionComponent } from './pages/Profesionales/disponibilidad-horaria/horas-atencion/horas-atencion.component';
 import { ConfiguracionComponent } from './pages/Profesionales/disponibilidad-horaria/configuracion/configuracion.component';
 import { configSessionResolver } from '../core/resolvers/configSession.resolver';
+import { AbrirAgendaComponent } from './pages/Profesionales/abrir-agenda/abrir-agenda.component';
+import { abrirAgendaResolver } from '../core/resolvers/abrirAgenda.resolver';
 
 
 
@@ -64,6 +66,14 @@ const routes: Routes = [
         data: { titulo: 'Agenda Disponible'},
         resolve: {
           config: configSessionResolver
+        }
+      },
+      {
+        path: 'abrir-agenda',
+        component: AbrirAgendaComponent,
+        data: { titulo: 'Apertura Agenda'},
+        resolve: {
+          fecha: abrirAgendaResolver
         }
       },
       {

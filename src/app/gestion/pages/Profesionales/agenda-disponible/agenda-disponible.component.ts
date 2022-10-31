@@ -52,8 +52,6 @@ export class AgendaDisponibleComponent implements OnInit {
       console.log(this.events[0]); 
       defineFullCalendarElement();
     },2000);
-    console.log('red flag')
-
   }
 
   calendarOptions: CalendarOptions = {
