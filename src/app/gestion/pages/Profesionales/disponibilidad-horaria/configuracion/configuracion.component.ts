@@ -67,6 +67,7 @@ export class ConfiguracionComponent implements OnInit {
           localStorage.removeItem('horaFin')
           localStorage.removeItem('horaInicio')
           localStorage.removeItem('Dias')
+          this.router.navigate(['dashboard/abrir-Agenda'])
         }
     });
   }

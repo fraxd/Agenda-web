@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CalendarOptions, defineFullCalendarElement, Duration } from '@fullcalendar/web-component';
+import { CalendarOptions, defineFullCalendarElement, EventClickArg } from '@fullcalendar/web-component';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import esLocale from '@fullcalendar/core/locales/es';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -10,13 +10,16 @@ import { AgendaService } from 'src/app/core/services/agenda.service';
 
 import { configSession } from 'src/app/core/interfaces/config-sesion.interface';
 import { session } from 'src/app/core/interfaces/sesion.interface';
-
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
+import {ModalEditEventComponent } from '../components/modal-edit-event/modal-edit-event.component'
 
 
 @Component({
   selector: 'app-agenda-disponible',
   templateUrl: './agenda-disponible.component.html',
-  styleUrls: ['./agenda-disponible.component.css']
+  styleUrls: ['./agenda-disponible.component.css'],
+  providers: [DialogService,MessageService]
 })
 export class AgendaDisponibleComponent implements OnInit {
 
@@ -25,14 +28,15 @@ export class AgendaDisponibleComponent implements OnInit {
   configAgenda: configSession;
   dias: any[] = [];
   flag: boolean = false;
-  events: any[] = []
-  //   {
-  //     title  : 'event3',
-  //     start  : '2022-10-26T12:30:00',
-  //     end  : '2022-10-26T15:30:00',
-  //   }
-  // ];
-  constructor(private agendaService:AgendaService, private _ac: ActivatedRoute) {
+  events: any[] = [];
+  ref: DynamicDialogRef;
+
+
+  constructor(private agendaService:AgendaService, 
+              private _ac: ActivatedRoute, 
+              public dialogService: DialogService, 
+              public messageService: MessageService) 
+              {
     const temp = _ac.snapshot.data;
     const tempaux = temp['config'];
     tempaux.config.subscribe( (res:any) =>{
@@ -40,23 +44,22 @@ export class AgendaDisponibleComponent implements OnInit {
     });
     tempaux.events.subscribe( (res:session[])=>{
       this.events = res;
-      // por algun motivo no muesta los eventos el calendairo hacer prueba indivuduales
+      console.log(this.events)
     })
    
   }
   
   ngOnInit(): void {
+    defineFullCalendarElement();
     setTimeout( ()=>{
       this.flag = true;
-      console.log('pasaron 3 segundos?') 
-      console.log(this.events[0]); 
-      defineFullCalendarElement();
+      this.calendarOptions.events = this.events;
     },2000);
   }
 
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin,timeGridPlugin, interactionPlugin],
-    initialView: 'timeGridDay',
+    initialView: 'dayGridMonth',
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
@@ -64,14 +67,14 @@ export class AgendaDisponibleComponent implements OnInit {
     },
     locale: esLocale,
     selectable: true,
-    editable: true,
+    editable: false,
     slotDuration: this.duracionSesion,
     themeSystem: 'bootstrap5',
     nowIndicator: true,
     businessHours: this.getDias(), 
     hiddenDays: this.hiddenDay(), // muestra los dias de atencion segun el profesional - tal vez desactivar y habilitarlo para pacientes
     validRange: this.rangoVisualizacion(),
-    events: this.returnEvents()!
+    eventClick: (infoEvent) => this.eventoDetails(infoEvent)
 
 
     
@@ -90,7 +93,7 @@ export class AgendaDisponibleComponent implements OnInit {
     return dias
 
   }
-  setearDatos(){
+  setearDatos(){ // pone la durecion de ms a minutos
     this.duracionSesion = this.configAgenda.duracion * 60000;
     // dejo hasta aqui hasta saber que mas implementar      
     }
@@ -106,33 +109,28 @@ export class AgendaDisponibleComponent implements OnInit {
     }
   }
 
-  returnEvents(){
-    if(this.events.length>1) {
-      console.log('se envio parece') 
-      return this.events
-    }
-    console.log('NO SE ENVIO NADA')
-    return [
-      {
-            title  : 'event3',
-            start  : '2022-10-26T12:30:00',
-            end  : '2022-10-26T15:30:00',
-      },   
-      {
-        title: 'Consulta',
-        start: '2022-10-26T14:10:00',
-        end: '2022-10-26T14:31:00',
-          disponible: true,
-          especialidad:'Medicina General',
-          id: 0.15418398382205378,
-          nombreProfesional: '',
-          uid: '1CKazjqO4GWMWCVpjjmTaaejist2'
-      }]
+  eventoDetails(infoEvent:EventClickArg){
+    // LA IDEA ES QUE OBTENGA EL EVENTO ACA Y LO ENVIE SOLITO AL MODAL
+    // IMPLEMENTAR QUE EL NOMBRE DE LOS DOCUMENTOS DE LAS SESIONES SEAN IGUALES A LOS ID 
+    this.ref = this.dialogService.open(ModalEditEventComponent, {
+      header: 'Editar Sesion',
+      width: '70%',
+      data: {
+        id: infoEvent.event.id as string
+      },
+      contentStyle: {"overflow": "auto"},
+      baseZIndex: 10000,
+      maximizable: false
 
-
-
-
+      //HASTA HORA LO EDITABLE SERIA PONERLA COMO BLOQUEADA
+      // despues implementar el que pasara si alguien tiene la hora, si se puede reagendar manualmente
+      // y si la hora esta agendada tal vez bloquear edicion
+    });
   }
 
-
+  ngOnDestroy() {
+    if (this.ref) {
+        this.ref.close();
+    }
+  }
 }

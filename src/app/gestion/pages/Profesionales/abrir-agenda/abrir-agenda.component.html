@@ -1,4 +1,8 @@
 <p-card header="Apertura Agenda">
+        <!-- Dialog o popUp de Primeng -->
+        <p-toast position="top-left"></p-toast>
+        <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+        <!--  -->
         <div *ngIf="flag">
                 <div class="fechaPrevia" *ngIf="flagFecha">
                         <i>Ultima fecha Aperturada: </i>
@@ -13,11 +17,10 @@
                                 selectionMode="range" [showOtherMonths]="false" [minDate]="fechaInicioTemp"
                                 [maxDate]="fechaFinTemp" [firstDayOfWeek]="1" [required]="true"
                                 (onClose)="eventCalendar()"></p-calendar>
-
                 </div>
                 <br>    
                 <div>
-                        <p-button label="Abrir Agenda" [disabled]="!flagButton"></p-button>
+                        <p-button label="Abrir Agenda" [disabled]="!flagButton" (click)="abrirAgenda()"></p-button>
                 </div>
         </div>
         <p-progressBar *ngIf="!flag" mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>

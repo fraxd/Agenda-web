@@ -29,6 +29,7 @@
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.0",
     "chart.js": "^3.9.1",
+    "firebase-functions": "^4.0.1",
     "jquery": "^3.6.0",
     "ng2-charts": "^4.0.1",
     "ngx-toastr": "^15.0.0",
@@ -49,6 +50,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "~4.7.2"
+    "typescript": "^4.7.4"
   }
 }

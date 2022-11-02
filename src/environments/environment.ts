@@ -13,7 +13,8 @@ export const environment = {
     messagingSenderId: '199579897908',
     measurementId: 'G-JDBQNFT3NV',
   },
-  production: false
+  production: false,
+  urlBackEnd: 'http://localhost:5000/proyecto-agenda-web-a1177/us-central1'
 };
 
 /*

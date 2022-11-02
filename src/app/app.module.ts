@@ -9,6 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
+import { HttpClientModule } from '@angular/common/http';
+
 
 //Componentes
 import { AppComponent } from './app.component';
@@ -43,6 +45,7 @@ import { AuthModule } from './gestion/auth/auth.module'
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
     ReactiveFormsModule,
+    HttpClientModule,
     /// MODULOS DE COMPONENTES
     SharedModule,
     PagesModule,

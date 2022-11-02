@@ -9,5 +9,6 @@ export const environment = {
     messagingSenderId: '199579897908',
     measurementId: 'G-JDBQNFT3NV',
   },
-  production: true
+  production: true,
+  urlBackEnd: 'https://us-central1-proyecto-agenda-web-a1177.cloudfunctions.net'
 };

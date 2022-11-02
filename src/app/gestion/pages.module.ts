@@ -7,6 +7,10 @@ import { CheckboxModule } from 'primeng/checkbox';
 import {ButtonModule} from 'primeng/button';
 import {StepsModule} from 'primeng/steps';
 import {ProgressBarModule} from 'primeng/progressbar';
+import {ToastModule} from 'primeng/toast';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
+
 
 // Modulos mios
 import { ComponentsModule } from '../components/components.module';
@@ -27,6 +31,7 @@ import { DisponibilidadModule } from './pages/Profesionales/disponibilidad-horar
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { AbrirAgendaComponent } from './pages/Profesionales/abrir-agenda/abrir-agenda.component';
+import { ModalEditEventComponent } from './pages/Profesionales/components/modal-edit-event/modal-edit-event.component';
 
 
 
@@ -41,7 +46,8 @@ import { AbrirAgendaComponent } from './pages/Profesionales/abrir-agenda/abrir-a
     RxjsComponent,
     AgendaDisponibleComponent,
     DisponibilidadHorariaComponent,
-    AbrirAgendaComponent
+    AbrirAgendaComponent,
+    ModalEditEventComponent
   ],
   exports: [
     PagesComponent,
@@ -64,7 +70,10 @@ import { AbrirAgendaComponent } from './pages/Profesionales/abrir-agenda/abrir-a
     DisponibilidadModule,
     CalendarModule,
     CardModule,
-    ProgressBarModule
+    ProgressBarModule,
+    ToastModule,
+    ConfirmDialogModule,
+    DynamicDialogModule
     
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

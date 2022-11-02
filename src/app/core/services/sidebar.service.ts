@@ -33,10 +33,9 @@ export class SidebarService {
             titulo: 'Profesional',
             icon: 'mdi mdi-alert',
             submenu: [
-              { titulo: 'Disponibiidad', url:'disponibilidad'},
+              { titulo: 'Abrir Agenda', url:'abrir-agenda'},
               { titulo: 'Agenda', url:'agenda-disponible'},
-              { titulo: 'otro', url:'promesas'},
-              { titulo: 'Abrir Agenda', url:'abrir-agenda'}
+              { titulo: 'Config Disponibiidad', url:'disponibilidad'},
             ]
           }
         )
