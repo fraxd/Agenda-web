@@ -23,6 +23,7 @@ export class AbrirAgendaComponent implements OnInit {
   fechaFinTemp: Date = new Date();
   flagButton: boolean = false; // Flag para el boton de crear agenda  
   flagError: boolean = false;
+  statusConfig: boolean = false; // Si es falso es porque aun no configuran la agenda.
   constructor(private disp:DisponibilidadService, 
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
@@ -30,6 +31,7 @@ export class AbrirAgendaComponent implements OnInit {
   
    ngOnInit(): void{
     this.ultimaFechaConsulta();
+    this.configPrevia()
   }
 
 
@@ -41,7 +43,6 @@ export class AbrirAgendaComponent implements OnInit {
       this.fechaFinTemp.setDate(this.lastDayOpen.getDate()+45);
       this.fechaInicioTemp = this.lastDayOpen;
     }  
-    console.log(this.fechaFinTemp)
   }
 
   // Ultima Fecha que realizo apertura de agenda.
@@ -52,16 +53,14 @@ export class AbrirAgendaComponent implements OnInit {
       if(res.exists){
         temp = res.data();
         fecha = temp.fecha.toDate();
-        console.log('its works');
         this.fecha[0]= fecha;
         this.fecha[1]= fecha;
         this.flagFecha = true;
       }else console.log('No ha Abierto Agenda.');
       
-    });
+    }); 
     setTimeout( ()=>{
       this.flag = true;
-      console.log('pasaron 0.5 segundos?') 
       this.lastDayOpen = fecha;
       this.fechaMaxMin();
     },500);
@@ -85,16 +84,28 @@ export class AbrirAgendaComponent implements OnInit {
       message: '¿Esta seguro de las fechas selecionadas?',
       header: 'Confirmacion',
       accept: () =>{ // FUNCIONAL ADVERTENCIA SUBE TODO A LA DB
+          this.messageService.add({severity:'info', summary:'Apertura de Agenda en proceso.', detail:'Se enviara al Dashboard.'});   
           this.disp.abrirAgenda(this.fecha).subscribe( res =>{
-            console.log(res);
             this.messageService.add({severity:'success', summary:'Apertura de Agenda Realizada.', detail:'Se redirije al Dashboard.'});   
           });
-          this.router.navigate(['\dashboard']);      
+          setTimeout( ()=>{
+            this.router.navigate(['\dashboard']);      
+          },3000);
       },
       reject: () =>{
         this.messageService.add({severity:'warn', summary:'Apertura de Agenda Cancelada.', detail:'No se ha hecho ningun cambio.'});   
       }
     })
+  };
+
+  configPrevia(){ // Evalua si existe una configuracion previa , en caso de no existir No permite la apertura de agenda
+    this.disp.recibirDatosBDbyUID().subscribe( res =>{
+      if(res) this.statusConfig = true;
+    });
+  }
+
+  goToCreateConfig(){
+    this.router.navigate(['/dashboard/disponibilidad']);
   }
 
 

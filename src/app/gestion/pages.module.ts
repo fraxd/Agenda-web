@@ -10,28 +10,30 @@ import {ProgressBarModule} from 'primeng/progressbar';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
+import {SelectButtonModule} from 'primeng/selectbutton';
+import {InputTextModule} from 'primeng/inputtext';
+import {DialogModule} from 'primeng/dialog';
+import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+
 
 
 // Modulos mios
-import { ComponentsModule } from '../components/components.module';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 
 
 import { PagesComponent } from './pages.component';
 import { NoPageFoundComponent } from './no-page-found/no-page-found.component';
-import { ProgressComponent } from './pages/progress/progress.component';
-import { Grafica1Component } from './pages/grafica1/grafica1.component';
 import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
-import { PromesasComponent } from './pages/promesas/promesas.component';
-import { RxjsComponent } from './pages/rxjs/rxjs.component';
 import { AgendaDisponibleComponent } from './pages/Profesionales/agenda-disponible/agenda-disponible.component';
 import { DisponibilidadHorariaComponent } from './pages/Profesionales/disponibilidad-horaria/disponibilidad-horaria.component';
 import { DisponibilidadModule } from './pages/Profesionales/disponibilidad-horaria/disponibilidad.module';
-import { CalendarModule } from 'primeng/calendar';
-import { CardModule } from 'primeng/card';
+
 import { AbrirAgendaComponent } from './pages/Profesionales/abrir-agenda/abrir-agenda.component';
 import { ModalEditEventComponent } from './pages/Profesionales/components/modal-edit-event/modal-edit-event.component';
+import { DashboardModule } from './pages/dashboard/dashboard.module';
 
 
 
@@ -39,16 +41,12 @@ import { ModalEditEventComponent } from './pages/Profesionales/components/modal-
   declarations: [
     PagesComponent,
     NoPageFoundComponent,
-    ProgressComponent,
-    Grafica1Component,
     AccountSettingsComponent,
-    PromesasComponent,
-    RxjsComponent,
     AgendaDisponibleComponent,
     DisponibilidadHorariaComponent,
     AbrirAgendaComponent,
-    ModalEditEventComponent
-  ],
+    ModalEditEventComponent,
+    ],
   exports: [
     PagesComponent,
     NoPageFoundComponent,
@@ -62,18 +60,28 @@ import { ModalEditEventComponent } from './pages/Profesionales/components/modal-
     FormsModule,
     AppRoutingModule,
     SharedModule,
-    ComponentsModule,
     ReactiveFormsModule,
+    
+
+    //modulos propios
+    DisponibilidadModule,
+    DashboardModule,
+
+    //Primeng
     CheckboxModule,
     ButtonModule,
     StepsModule,
-    DisponibilidadModule,
     CalendarModule,
     CardModule,
     ProgressBarModule,
     ToastModule,
     ConfirmDialogModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    SelectButtonModule,
+    InputTextModule,
+    DialogModule,
+    ProgressSpinnerModule,
+    
     
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

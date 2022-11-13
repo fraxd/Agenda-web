@@ -5,7 +5,6 @@ import { User } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { environment } from '../../../environments/environment';
 import { configSession, horasSesion } from '../interfaces/config-sesion.interface';
-import { session } from '../interfaces/sesion.interface';
 
 interface detalles {
   fecha: Date;
@@ -93,9 +92,7 @@ export class DisponibilidadService {
           break;
       }
     }
-
-
-
+    
     const sessionConfig: configSession = {
       lunes: lunesTemp,
       martes: martesTemp,
@@ -114,7 +111,7 @@ export class DisponibilidadService {
 
 
   }
-
+  // Envia los datos si es que existen de la agenda.-
   recibirDatosBDbyUID(){
     return this.afs.collection('sessions-Config').doc(this.uid).valueChanges();
   }
@@ -127,9 +124,6 @@ export class DisponibilidadService {
 
 
   lastDayOpen(){
-  let fecha: Date = new Date(500000);
-  let info: any;
-
   return this.afs.collection(`sessions`).doc(this.especialidad).collection(this.uid).doc(`details`).get();
   }
 }

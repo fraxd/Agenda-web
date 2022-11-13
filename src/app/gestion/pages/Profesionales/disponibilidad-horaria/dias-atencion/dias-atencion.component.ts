@@ -13,6 +13,7 @@ import { DisponibilidadService } from 'src/app/core/services/disponibilidad.serv
 })
 export class DiasAtencionComponent implements OnInit {
 
+  display: boolean = false;
   disponibilidadHoraria: FormGroup;
   diasForm: FormGroup;
   diasSelected: Array<string> = []; // Array con los dias seleccionados 
@@ -43,6 +44,8 @@ export class DiasAtencionComponent implements OnInit {
       this.configPrevia = config as configSession;
       if(this.configPrevia){
         this.setearValores(); // solo avisa que hay datos previos :(
+      } else {
+        this.display=true;
       }
     });
 

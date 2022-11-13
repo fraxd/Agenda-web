@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
+
+//Primeng Modulos
+import {CardModule} from 'primeng/card';
 
 
 @NgModule({
@@ -11,7 +13,10 @@ import { DashboardComponent } from './dashboard.component';
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+
+
+    // Primeng Modulos
+    CardModule,
   ]
 })
 export class DashboardModule { }

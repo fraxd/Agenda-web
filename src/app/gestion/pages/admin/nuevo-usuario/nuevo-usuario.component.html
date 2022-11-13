@@ -1,0 +1,54 @@
+<p-card header="Nuevo Usuario">
+    <div class="row     ">
+        <span class="col-md-auto">
+            <h6>Nombre del usuario</h6>
+            <input id="float-input" type="text" [(ngModel)]="nombre" placeholder="Nombre y apellido" pInputText>
+        </span>
+        <br>
+        <span class="col-md-auto">
+            <h6>Correo Electronico</h6>
+            <input id="float-input" type="text" [(ngModel)]="email" placeholder="Correo Electronico" pInputText>
+        </span>
+        <br>
+        <div class="col-md-auto">
+            <h6>Defina el rol del usuario</h6>
+            <p-dropdown [options]="roles" [(ngModel)]="rolSelected" placeholder="Rol" optionLabel="name"
+                [showClear]="true" (onChange)="rolChange()"></p-dropdown>
+            <br> <br>
+        </div>
+    </div>
+    <div class="form-profesional" *ngIf="rolSelected.name === 'profesional'">
+        <h6>Defina la Especialidad del profesional</h6>
+        <p-dropdown [options]="especialidades" [(ngModel)]="especialidadSelected" optionLabel="especialidad"
+            [filter]="true" filterBy="especialidad" [showClear]="false" placeholder="Seleciona Especialidad">
+            <ng-template pTemplate="selectedItem">
+                <div class="country-item country-item-value" *ngIf="especialidadSelected">
+                    <div>{{especialidadSelected.especialidad}}</div>
+                </div>
+            </ng-template>
+            <ng-template let-especialidad pTemplate="item">
+                <div class="especialidad-item">
+                    <div>{{especialidad.especialidad}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+    </div>
+    <br>
+    <h6>Contraseña Temporal</h6>
+    <div class="row">
+        <div class="col-3">
+            <input type="text" pInputText [(ngModel)]="password" />
+        </div>
+        <div class="col-9">
+            <button pButton pRipple type="button" label="Generar Nueva clave"
+                class="p-button-outlined p-button-rounded p-button-secondary" (click)="generatePassword()"></button>
+        </div>
+    </div>
+    <br>
+    <div>
+        <p-button label="Crear Nuevo Usuario" icon="pi pi-check" (onClick)="submit()" ></p-button>
+    </div>
+
+
+
+</p-card>

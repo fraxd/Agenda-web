@@ -1,7 +1,24 @@
 <p-card header="Agenda">
+    <!--spinner mientras se carga la info-->
+    <p-progressSpinner class="row justify-content-center" *ngIf="!flag"></p-progressSpinner>
+    <p-toast></p-toast>
     <full-calendar *ngIf="flag" [options]='calendarOptions'></full-calendar>
 
 </p-card>
+
+
+
+<p-dialog header="Información" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false">
+    <p class="m-0">Te Recordamos lo siguiente, Los eventos tienen 3 colores dependiendo de su disponibilidad.
+        <li>Verde: Disponible para agendar</li>
+        <li>Amarillo: Hora Agendada</li>
+        <li>Rojo: Hora bloqueada Manualmente</li>
+    </p>
+        <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button>
+        </ng-template>
+</p-dialog>
 
 <!-- < -->
 

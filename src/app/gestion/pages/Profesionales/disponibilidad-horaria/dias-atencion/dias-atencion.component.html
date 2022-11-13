@@ -25,3 +25,17 @@
         <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
     </div>
 </div>
+
+<p-dialog header="Aviso" [(visible)]="display" [modal]="true" [style]="{width: '60vw'}">
+    <div class="modalAviso">
+        <b>Hola!, Bienvenidos</b><br>
+        <p>
+            Vemos que es tu primera vez aqui, Para comenzar deber indicar tus dias de atencion y tus horarios para configurar tu agenda. <br>
+            Espero que puedas configurarlo correctamente y empieces atender a tus pacientes a la brevedad. <br>
+            Saludos.
+        </p>
+        
+        <p-button icon="pi pi-check" (click)="display=false" label="¡A comenzar!" styleClass="p-button-text"></p-button>
+    </div>
+
+</p-dialog>

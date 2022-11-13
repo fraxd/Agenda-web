@@ -12,14 +12,14 @@ import { configSession } from 'src/app/core/interfaces/config-sesion.interface';
 import { session } from 'src/app/core/interfaces/sesion.interface';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
-import {ModalEditEventComponent } from '../components/modal-edit-event/modal-edit-event.component'
+import { ModalEditEventComponent } from '../components/modal-edit-event/modal-edit-event.component'
 
 
 @Component({
   selector: 'app-agenda-disponible',
   templateUrl: './agenda-disponible.component.html',
   styleUrls: ['./agenda-disponible.component.css'],
-  providers: [DialogService,MessageService]
+  providers: [DialogService, MessageService]
 })
 export class AgendaDisponibleComponent implements OnInit {
 
@@ -30,35 +30,36 @@ export class AgendaDisponibleComponent implements OnInit {
   flag: boolean = false;
   events: any[] = [];
   ref: DynamicDialogRef;
+  displayModal: boolean = true;
 
-
-  constructor(private agendaService:AgendaService, 
-              private _ac: ActivatedRoute, 
-              public dialogService: DialogService, 
-              public messageService: MessageService) 
-              {
+  constructor(private agendaService: AgendaService,
+    private _ac: ActivatedRoute,
+    public dialogService: DialogService,
+    public messageService: MessageService) {
     const temp = _ac.snapshot.data;
     const tempaux = temp['config'];
-    tempaux.config.subscribe( (res:any) =>{
+    tempaux.config.subscribe((res: any) => {
       this.configAgenda = res;
     });
-    tempaux.events.subscribe( (res:session[])=>{
+    tempaux.events.subscribe((res: session[]) => {
+      this.calendarOptions.events = res;
       this.events = res;
-      console.log(this.events)
-    })
-   
-  }
-  
-  ngOnInit(): void {
-    defineFullCalendarElement();
-    setTimeout( ()=>{
       this.flag = true;
-      this.calendarOptions.events = this.events;
-    },2000);
+    })
+
+  }
+
+  ngOnInit(): void {
+    if(!customElements.get('full-calendar')) defineFullCalendarElement();
+    // Al parecr con la nueva config ya no es necesario.
+    // setTimeout(() => {
+    //   // this.calendarOptions.events = this.events;
+    //   console.log('flag timeout')
+    // }, 3000);
   }
 
   calendarOptions: CalendarOptions = {
-    plugins: [dayGridPlugin,timeGridPlugin, interactionPlugin],
+    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {
       left: 'prev,next today',
@@ -71,66 +72,86 @@ export class AgendaDisponibleComponent implements OnInit {
     slotDuration: this.duracionSesion,
     themeSystem: 'bootstrap5',
     nowIndicator: true,
-    businessHours: this.getDias(), 
+    businessHours: this.getDias(),
     hiddenDays: this.hiddenDay(), // muestra los dias de atencion segun el profesional - tal vez desactivar y habilitarlo para pacientes
     validRange: this.rangoVisualizacion(),
-    eventClick: (infoEvent) => this.eventoDetails(infoEvent)
-
-
+    eventClick: (infoEvent) => this.eventoDetails(infoEvent),
     
-  
+
+
+
+
   };
 
-  hiddenDay(){  // retorna del localStorage los dias que el profesional no atiende
-    const dias = JSON.parse( (localStorage.getItem('NoAtencion') || ''));
+  hiddenDay() {  // retorna del localStorage los dias que el profesional no atiende
+    const dias = JSON.parse((localStorage.getItem('NoAtencion') || ''));
     localStorage.removeItem('NoAtencion');
     return dias
   }
-  getDias(){ // retorna un array con los dias que atiende el profesional y su rango de horarios 
-                                                  // no necesariamente retorna la disponibilda real
-    const dias = JSON.parse( (localStorage.getItem('Dias') || ''));
+  getDias() { // retorna un array con los dias que atiende el profesional y su rango de horarios 
+    // no necesariamente retorna la disponibilda real
+    const dias = JSON.parse((localStorage.getItem('Dias') || ''));
     localStorage.removeItem('Dias');
     return dias
 
   }
-  setearDatos(){ // pone la durecion de ms a minutos
+  setearDatos() { // pone la durecion de ms a minutos
     this.duracionSesion = this.configAgenda.duracion * 60000;
     // dejo hasta aqui hasta saber que mas implementar      
-    }
-  
-  rangoVisualizacion(){  // Se define que el usuario podra ver maximo 40 dias en adelante el calendario
+  }
+
+  rangoVisualizacion() {  // Se define que el usuario podra ver maximo 40 dias en adelante el calendario
     const now = new Date();
     let varEnd = new Date();
     varEnd.setDate(varEnd.getDate() + 40);
 
-    return{
+    return {
       start: now,
       end: varEnd
     }
   }
 
-  eventoDetails(infoEvent:EventClickArg){
-    // LA IDEA ES QUE OBTENGA EL EVENTO ACA Y LO ENVIE SOLITO AL MODAL
-    // IMPLEMENTAR QUE EL NOMBRE DE LOS DOCUMENTOS DE LAS SESIONES SEAN IGUALES A LOS ID 
+  eventoDetails(infoEvent: EventClickArg) { // Modal que permite editar el evento
+    let evento: session = this.returnEvento(infoEvent.event.id);
     this.ref = this.dialogService.open(ModalEditEventComponent, {
       header: 'Editar Sesion',
       width: '70%',
       data: {
-        id: infoEvent.event.id as string
+        event: evento
       },
-      contentStyle: {"overflow": "auto"},
+      contentStyle: { "overflow": "auto" },
       baseZIndex: 10000,
       maximizable: false
 
-      //HASTA HORA LO EDITABLE SERIA PONERLA COMO BLOQUEADA
-      // despues implementar el que pasara si alguien tiene la hora, si se puede reagendar manualmente
+      //  implementar el que pasara si alguien tiene la hora, si se puede reagendar manualmente
       // y si la hora esta agendada tal vez bloquear edicion
+      // Idea: OFRECER AL PROFESIONAL CANCELAR LA HORA Y ENVIAR CORREO AL PACIENTE DICIENDO SORRY K LATA NOMAS
     });
+
+    this.ref.onClose.subscribe((res: boolean) => {
+      if (res) {
+        this.messageService.add({ severity: 'success', summary: 'Sesion Actualizada', detail: 'Via Agenda' });
+
+      }
+
+    })
   }
 
+  returnEvento(id: string) {
+    let eventoReturn: session
+    this.events.forEach(function (evento) {
+      if (evento.id == id) {
+        eventoReturn = evento as session;
+      }
+    });
+    return eventoReturn!
+  }
   ngOnDestroy() {
     if (this.ref) {
-        this.ref.close();
+      this.ref.close();
     }
   }
+
+
+  //Tal vez implementar funcion que permita crear nuevos cupos extraordinarios manualmente
 }

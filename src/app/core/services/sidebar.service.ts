@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { DisponibilidadService } from './disponibilidad.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,24 +10,12 @@ export class SidebarService {
 
   public rol:string = localStorage.getItem('userRol') || 'null';
   public photourl:string = localStorage.getItem('User') || 'null'; // trabajar mas adelante
-
+  
   menu: any[] = []
-
-  constructor(private authService: AuthService, private router:Router) { 
+  constructor(private authService: AuthService, private router:Router, private disp:DisponibilidadService) { 
+    this.disp.recibirDatosBDbyUID().subscribe( res=>{
+    });
     switch(this.rol){
-      case 'paciente':  {
-        this.menu.push({
-          titulo: 'Paciente',
-          icon: 'mdi mdi-alert',
-          submenu: [
-            { titulo: 'Mis Horas', url: '/'},
-            { titulo: 'Agendar', url: '/'},
-            { titulo: 'Modficar cita', url: '/'}
-          ]
-        })
-        console.log(this.rol)
-        break;
-      }
       case 'profesional': {
         this.menu.push(
           {
@@ -38,7 +27,7 @@ export class SidebarService {
               { titulo: 'Config Disponibiidad', url:'disponibilidad'},
             ]
           }
-        )
+        );
         break;
       }
       case 'admin': {
@@ -48,11 +37,10 @@ export class SidebarService {
             icon: 'mdi mdi-gauge',
             submenu: [
               { titulo: 'dashboard', url:'/'},
-              { titulo: 'ProgressBar', url:'progress'},
-              { titulo: 'graficas', url:'grafica1'},
-              { titulo: 'rxjs', url:'rxjs'},
-              { titulo: 'Profesionales', url:'list-profesionales'},
+              { titulo: 'Nuevo usuario temp', url:'nuevousuario'},
+              { titulo: 'Profesionales', url:'admin/listProfesionales'},
               { titulo: 'Pacientes', url: 'list-pacientes'},
+              { titulo: 'Usuarios', url: 'admin/listUsuarios'},
               { titulo: 'Citas agendadas', url: 'list-citas'}
 
             ]

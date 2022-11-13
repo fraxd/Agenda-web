@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { User } from 'src/app/core/interfaces/User.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -9,16 +11,15 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class DashboardComponent implements OnInit {
 
-  user!: any;
-  constructor(private authService: AuthService, private router: Router) { }
+  user:User = JSON.parse(localStorage.getItem('user') || (''));
+  constructor( private router: Router, private afs:AngularFirestore ) { }
 
   ngOnInit(): void {
-  }
+    this.afs.collection('sessions-Config').doc(this.user.uid).valueChanges().subscribe( res =>{
+      if(!res) this.router.navigate(['/dashboard/disponibilidad']);
+    })
 
-  logOut(){
-    this.router.navigate(['/login']);
-    return this.authService.logOut();
-    
-  }
+    }
+
 
 }

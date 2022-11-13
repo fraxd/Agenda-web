@@ -10,7 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire/compat';
 import { HttpClientModule } from '@angular/common/http';
-
+import { provideStorage, getStorage } from '@angular/fire/storage'
 
 //Componentes
 import { AppComponent } from './app.component';
@@ -23,6 +23,8 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { SharedModule } from './shared/shared.module';
 import { PagesModule } from './gestion/pages.module';
 import { AuthModule } from './gestion/auth/auth.module'
+import { PacientesModule } from './gestion/pages/Pacientes/pacientes.module';
+import { AdminModule } from './gestion/pages/admin/admin.module';
 
 
 
@@ -39,6 +41,7 @@ import { AuthModule } from './gestion/auth/auth.module'
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    provideStorage( () => getStorage()),
     NgbModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -49,7 +52,9 @@ import { AuthModule } from './gestion/auth/auth.module'
     /// MODULOS DE COMPONENTES
     SharedModule,
     PagesModule,
-    AuthModule
+    AuthModule,
+    PacientesModule,
+    AdminModule
     
 
   ],

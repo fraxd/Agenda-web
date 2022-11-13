@@ -1,0 +1,35 @@
+<p-card>
+    <div *ngIf="flagConfig">
+        <b>Estimad@, debe definir el rango de fechas a aperturar horas. Recuerde que el profesional debe si o si ya
+            haber configurado sus horarios de atención.
+        </b>
+        <br><br>
+        <div class="col">
+            <br>
+            <h6>Defina rango de fechas</h6>
+            <br>
+            <i>Ultima fecha Aperturada: </i>
+            <p-calendar inputId="basic" [(ngModel)]="lastDayOpen" dateFormat="dd/mm/yy" disabled=true>
+            </p-calendar>
+        </div>
+        <div class="col">
+            <br>
+            <em> Definir el rango de apertura de agenda</em>
+            <br>
+            <p-calendar inputId="basic" [(ngModel)]="fecha" dateFormat="dd/mm/yy" [numberOfMonths]="1"
+                selectionMode="range" [showOtherMonths]="true" [minDate]="fechaInicioTemp" [numberOfMonths]="2"
+                [maxDate]="fechaFinTemp" [firstDayOfWeek]="1" [required]="true" (onSelect)="eventCalendar()" [inline]="true">
+            </p-calendar>
+        </div>
+        <br>
+        <p-button (onClick)="abrirAgenda()" [disabled]="!flagButton"> Abrir Agenda</p-button>
+    </div>
+
+    <div class="row" *ngIf="!flagConfig">
+        <!-- Esta seccion se muestra cuando el profesional no tiene configurada su sesion-->
+        <b> No puede abrir la agenda ya que el profesional no la ha configurado previamente.</b>
+    </div>
+</p-card>
+
+<p-confirmDialog header="Confirmacion" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>

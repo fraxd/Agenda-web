@@ -17,6 +17,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
+import {DialogModule} from 'primeng/dialog';
 
 
 
@@ -40,7 +41,7 @@ import {ConfirmationService} from 'primeng/api';
     DropdownModule,
     InputNumberModule,
     ConfirmDialogModule,
-    
+    DialogModule
     
   ],
   exports:[

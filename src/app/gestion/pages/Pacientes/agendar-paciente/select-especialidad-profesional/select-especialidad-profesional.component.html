@@ -1,0 +1,35 @@
+<p-card class="row">
+    <h6>Seleciona la especialidad que deseas atenderte:</h6>
+        <p-dropdown [options]="especialidades" 
+                    [(ngModel)]="selectEspecialidad" 
+                    optionLabel="especialidad" 
+                    [filter]="true" 
+                    filterBy="especialidad" 
+                    [showClear]="true" 
+                    placeholder="Seleciona Especialidad"
+                    (onChange)="buscarDataprofesionales($event)"
+                    [disabled]="especialidadFlag">
+            <ng-template pTemplate="selectedItem">
+                <div class="country-item country-item-value" *ngIf="selectEspecialidad">
+                    <div>{{selectEspecialidad.especialidad}}</div>
+                </div>
+            </ng-template>
+            <ng-template let-especialidad pTemplate="item">
+                <div class="especialidad-item">
+                    <div>{{especialidad.especialidad}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown>
+</p-card>
+<div class="row row-cols-auto center" *ngIf="especialidadFlag">
+    
+    <p-card class="col-md-auto" *ngFor="let profesional of profesionales" [header]="profesional.nombre" [style]="{'width': '15rem', 'margin-top': '1em'}">
+        <ng-template pTemplate="header">
+            <img alt="Card" [src]="profesional.photo ">
+        </ng-template>
+        Proxima Hora Disponible: **MUY PRONTO**
+        <br><br>
+        <p-button label="Agendar Hora" (onClick)="modalProfesional(profesional)" ></p-button>
+    </p-card>
+</div>
+

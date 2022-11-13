@@ -30,7 +30,6 @@ export class gestionAgenda {
       
       //Codigo bastante poco eficiente, evaluar mejorarlo
       if(config.lunes.activo){
-          console.log('Lunes ----')
           this.generarAgenda(config.lunes,1,config.duracion,fechaInicio,fechanFin);
       }
       if(config.martes.activo){
@@ -45,7 +44,7 @@ export class gestionAgenda {
       if(config.viernes.activo){
           this.generarAgenda(config.viernes,5,config.duracion,fechaInicio,fechanFin);
       }
-        
+    console.log('Its done')
   }
 
     generarAgenda(sessionConfig: horasSesion, dia: number, duracion: number, fechaInicio:Date, fechaFin:Date){
@@ -77,6 +76,7 @@ export class gestionAgenda {
               title: 'Consulta',
               start: this.timeGenerator(fecha,timeCurrent),
               end: this.timeGenerator(fecha,timeCurrentEnd),
+              color: 'green'
               });
             if(timeCurrentEnd.hours>fechaTemp.getHours()) flag= false;
             else if(timeCurrentEnd.hours==fechaTemp.getHours() && 
@@ -141,10 +141,15 @@ export class gestionAgenda {
     subirBD(sessiones :session[],fechaFin:Date,dia:number){
         const colRef =  this.db.collection(`sessions/${this.especialidad}/${this.uid}`);
         sessiones.forEach(function (sesion){
-            colRef.add(sesion).catch( err =>{
-              console.log(err)
-            }) 
+          let sessionRef = colRef.doc(sesion.id);
+          sessionRef.create(sesion).catch(err =>{
+            console.log(err);
+          })
+            // colRef.add(sesion).catch( err =>{
+            //   console.log(err)
+            // }) 
         }); 
+
         let fechaDB:Details = {
           fecha: fechaFin
         }  

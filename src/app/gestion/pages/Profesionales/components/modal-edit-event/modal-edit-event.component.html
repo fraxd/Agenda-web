@@ -1,1 +1,33 @@
-<p>modal-edit-event works!</p>
+<div>
+    <p-toast></p-toast>
+    <h6>Fecha</h6>
+    <p-calendar [(ngModel)]="eventStart" [disabled]="true"></p-calendar>
+    <br>
+    <h6>Horario</h6>
+    <p-calendar [(ngModel)]="eventStart" [timeOnly]="true" [disabled]="true"></p-calendar>
+    <p-calendar [(ngModel)]="eventEnd"[timeOnly]="true" [disabled]="true"></p-calendar>
+    <br>
+    <h6>Estado Sesion</h6>
+    <p-selectButton [options]="estadoSesion" 
+                    [(ngModel)]="statusSesion" 
+                    optionLabel="label" 
+                    optionValue="value"
+                    [disabled]="flagSesion"
+                    ></p-selectButton>
+    <br>
+</div>
+<div *ngIf="flagSesion">
+    <div class="row col-4">
+        <label >UID del Paciente</label>
+        <input type="text" pInputText [(ngModel)]="evento.pacienteUID" [disabled]="true" />
+    </div>
+    <!-- Hay que implementar que muestre el nombre del paciente y tal vez ver su "perfil"-->
+
+    <label >Fecha que Fue Agendada</label>
+    <div class="row col-4">
+        <input type="text" pInputText [(ngModel)]="evento.fechaTomada" [disabled]="true" />
+    </div>
+    
+</div>
+<br>
+<p-button label="Guardar Datos" (click)="submit()" ></p-button>

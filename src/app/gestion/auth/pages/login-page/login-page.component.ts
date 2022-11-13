@@ -14,6 +14,8 @@ export class LoginPageComponent implements OnInit {
 
   loginForm!: FormGroup;
 
+  rol:string = localStorage.getItem('userRol') as string;
+
   usuario!: LoginData;
 
   loading: boolean = false;
@@ -22,7 +24,10 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.initForm();
-    if(this.authService.isLoggedIn) this.router.navigate(['/dashboard']);
+    if(this.authService.isLoggedIn){
+      if(this.rol=='paciente') this.router.navigate(['/hubsalud']);
+      else  this.router.navigate(['/dashboard']);
+    } 
   }
   // Login
  onSubmit(): void {

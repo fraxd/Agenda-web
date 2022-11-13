@@ -64,10 +64,10 @@ export class ConfiguracionComponent implements OnInit {
                                             this.horaFin, 
                                             this.duracion.code, 
                                             this.dinero); 
-          localStorage.removeItem('horaFin')
-          localStorage.removeItem('horaInicio')
-          localStorage.removeItem('Dias')
-          this.router.navigate(['dashboard/abrir-Agenda'])
+          localStorage.removeItem('horaFin');
+          localStorage.removeItem('horaInicio');
+          localStorage.removeItem('Dias');
+          this.router.navigate(['dashboard/abrir-agenda'])
         }
     });
   }

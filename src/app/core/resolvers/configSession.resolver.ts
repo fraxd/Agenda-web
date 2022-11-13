@@ -3,7 +3,9 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { User } from "@angular/fire/auth";
 import { configSession } from "../interfaces/config-sesion.interface";
-import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/compat/firestore";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { HttpClient } from "@angular/common/http";
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -16,13 +18,14 @@ export class configSessionResolver implements Resolve<Observable<any>>{ // cambi
     user: User = JSON.parse( (localStorage.getItem('user') || ''));
     uid: string = this.user.uid;
     diasArray: any[];
-    especialidad: string = 'Medicina General'; // ADAPTAR PARA USO GENERAL
+    especialidad: string = localStorage.getItem('Especialidad') || '';
 
-    constructor( private afs:AngularFirestore){}
+    constructor( private afs:AngularFirestore, private http:HttpClient){}
 
-    resolve(){  
+    resolve(){ 
+        const events = this.http.get(`${ environment.urlBackEnd }/api/getAgenda?uid=${this.uid}&especialidad=${this.especialidad}`)
         const config: Observable<any> = this.obtenerDatos();
-        const events: Observable<any> = this.afs.collection(`sessions/${this.especialidad}/${this.uid}`).valueChanges();  
+        // const events: Observable<any> = this.afs.collection(`sessions/${this.especialidad}/${this.uid}`).valueChanges();  
             this.obtenerDatos().subscribe( res=>{
                 this.diasArray = this.getDiasArray(res) as any[ ];
                 this.diasAtencion();
