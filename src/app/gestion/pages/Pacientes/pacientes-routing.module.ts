@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AgendaPacienteResolver } from 'src/app/core/resolvers/agenda-paciente.resolver';
 import { AuthGuard } from 'src/app/shared/auth.guard';
+import { AgendaRealizadaComponent } from './agenda-realizada/agenda-realizada.component';
 import { AgendarPacienteComponent } from './agendar-paciente/agendar-paciente.component';
 import { ReservarComponent } from './agendar-paciente/reservar/reservar.component';
 import { SelectEspecialidadProfesionalComponent } from './agendar-paciente/select-especialidad-profesional/select-especialidad-profesional.component';
 import { SelectHoraComponent } from './agendar-paciente/select-hora/select-hora.component';
+import { FailPaymentComponent } from './fail-payment/fail-payment.component';
 import { HubsaludComponent } from './hubsalud/hubsalud.component';
 
 
@@ -44,7 +46,18 @@ const routes: Routes = [
             redirectTo: 'selectProfesional',
             pathMatch: 'full'
           },
-        ]
+        ],
+
+      },
+      {
+        path: 'failPayment',
+        component: FailPaymentComponent,
+        data: { titulo: 'Pago Fallido'}
+      },
+      {
+        path: 'agendado',
+        component: AgendaRealizadaComponent,
+        data: { titulo: 'Agenda Realizada'}
       }
 
     ]

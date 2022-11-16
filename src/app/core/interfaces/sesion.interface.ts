@@ -8,6 +8,7 @@ export interface session {
     especialidad: string,
     disponible: boolean,
     fechaTomada?: Date,  // Fecha de cuando se agendo la hora  --- OPCIONAL
-    pacienteUID?: string // uid del paciente  --- opcional mientras no este agendado
+    pacienteUID?: string, // uid del paciente  --- opcional mientras no este agendado
+    idReserva?: string // id de la reserva --- opcional mientras no este agendado (reserva es la informacion que se genera cuando se reserva la hora)
     
 }

@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
-import { User } from 'src/app/core/interfaces/User.interface';
 import { AgendarHoraService } from 'src/app/core/services/pacientes/agendar-hora.service';
 
 interface profesional {
@@ -10,7 +9,8 @@ interface profesional {
   sesionProxima: Date,
   uid: string,
   photo?: string,
-  especialidad: string
+  especialidad: string,
+  valor: number
 }
 @Component({
   selector: 'app-select-especialidad-profesional',
@@ -55,7 +55,8 @@ export class SelectEspecialidadProfesionalComponent implements OnInit {
             sesionProxima: this.fecha,
             photo: usuario.photoURL,
             uid: usuario.uid,
-            especialidad: event.value.especialidad
+            especialidad: event.value.especialidad,
+            valor: usuario.valor
           }
         );
       })
@@ -63,14 +64,19 @@ export class SelectEspecialidadProfesionalComponent implements OnInit {
     });
   }
 
-  modalProfesional(profesionalVar:profesional){
+  submit(profesionalVar:profesional){
     this.profesional = profesionalVar;
     localStorage.setItem('profesionalUID', this.profesional.uid);
     localStorage.setItem('EspecialidadProfesional', this.profesional.especialidad);
-    this.agendaHoraService.disparador.emit({
-      data: this.profesional
-    });
+    this.agendaHoraService.setProfesional(this.profesional);
+
+
     this.router.navigate(['/hubsalud/agendar/selectHora']);
+  }
+
+  // Simplemente retorna un array desde el numero que se le mande -- Es para el cargando
+  numSequence(n: number): Array<number> {
+    return Array(n);
   }
 
 }

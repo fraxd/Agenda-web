@@ -1,3 +1,25 @@
-<p-card>
+<p-card header="Reserva">
     
+    <h6>Detalle de tu reserva:</h6>
+    <ul>
+        <li>Profesional:  {{profesionalDetails.nombre}}  </li>
+        <li>Especialidad:  {{profesionalDetails.especialidad}} </li>
+        <li>Fecha: {{fecha}} </li>
+        <li>hora: {{hora}}</li>
+        <li>Valor Sesion Particular: {{profesionalDetails.valor}}</li>
+
+    </ul>
+
+
+    <p>Para confirmar la reserva debemos proceder al pago del servicio.</p>
+    <div>
+        <p-checkbox [(ngModel)]="checkBoolean" [binary]="true" inputId="binary"></p-checkbox>
+        <label for="binary">  Acepto los terminos y condiciones del servicio.</label>
+    </div>
+    <br><br>
+    <div class="row col">
+        <p-button (onClick)="submit()" [disabled]="!checkBoolean">Pagar y Reservar</p-button>
+
+    </div>
+
 </p-card>

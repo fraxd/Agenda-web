@@ -15,8 +15,9 @@ export class DashboardComponent implements OnInit {
   constructor( private router: Router, private afs:AngularFirestore ) { }
 
   ngOnInit(): void {
+    let rol = localStorage.getItem('userRol') as string;
     this.afs.collection('sessions-Config').doc(this.user.uid).valueChanges().subscribe( res =>{
-      if(!res) this.router.navigate(['/dashboard/disponibilidad']);
+      if(!res && rol=='profesional') this.router.navigate(['/dashboard/disponibilidad']);
     })
 
     }

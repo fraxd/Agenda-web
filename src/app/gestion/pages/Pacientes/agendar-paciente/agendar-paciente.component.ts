@@ -25,8 +25,8 @@ export class AgendarPacienteComponent implements OnInit {
       routerLink: 'selectHora'
   },
   {
-      label: 'Configuracion',
-      routerLink: 'config-atencion'
+      label: 'Reservar',
+      routerLink: 'reservar'
   }
 ];
   }

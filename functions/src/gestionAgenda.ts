@@ -158,4 +158,35 @@ export class gestionAgenda {
           merge: true,
         });
     }
+
+
+    updateLinkMeeting(db:admin.firestore.Firestore, uidReserva: string, uidEvento:string,  urlProfesional:string, urlPaciente:string, especialidad:string, uidProfesional:string){
+      this.db = db;
+      const colRef =  this.db.collection(`sessions/${especialidad}/${uidProfesional}`);
+      let docRef = colRef.doc(uidEvento);
+      let data = {
+        urlProfesional: urlProfesional
+      }
+      docRef.set(data,{
+        merge: true,
+      }).then( res =>{
+        console.log('Se actualizo el link del profesional')
+      }).catch( err =>{
+        console.log('fallo profesional')
+      })
+      const docRefPaciente = this.db.doc(`sesionesReserva/${uidReserva}`);
+      let dataPaciente = {
+        urlPaciente: urlPaciente
+      }
+      docRefPaciente.set(dataPaciente,{
+        merge: true,
+      }).then( res =>{
+        console.log('Se actualizo el link del paciente')
+      }).catch( err =>{
+        console.log('fallo paciente')
+      })
+
+
+
+    }
 }

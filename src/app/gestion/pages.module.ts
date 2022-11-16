@@ -46,6 +46,7 @@ import { DashboardModule } from './pages/dashboard/dashboard.module';
     DisponibilidadHorariaComponent,
     AbrirAgendaComponent,
     ModalEditEventComponent,
+    
     ],
   exports: [
     PagesComponent,

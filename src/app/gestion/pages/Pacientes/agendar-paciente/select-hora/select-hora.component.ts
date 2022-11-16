@@ -19,7 +19,7 @@ import { session } from 'src/app/core/interfaces/sesion.interface';
 export class SelectHoraComponent implements OnInit {
 
   events: any[] = [];
-  constructor( private _ac:ActivatedRoute, private router:Router ) {
+  constructor( private _ac:ActivatedRoute, private router:Router, private agendaService: AgendarHoraService) {
     let temp = _ac.snapshot.data;
     let sesiones:session[] = temp['data'];
     this.events = sesiones;
@@ -66,8 +66,20 @@ export class SelectHoraComponent implements OnInit {
   }
 
   eventoDetails(infoEvent: EventClickArg) {
+    let evento = this.returnEvento(infoEvent.event.id);
+    this.agendaService.setSesion(evento);
+    console.log(evento.start)
 
     this.router.navigate(['/hubsalud/agendar/reservar', infoEvent.event.id]);
-    console.log(infoEvent.event);
+  }
+
+  returnEvento(id: string) {
+    let eventoReturn: session
+    this.events.forEach(function (evento) {
+      if (evento.id == id) {
+        eventoReturn = evento as session;
+      }
+    });
+    return eventoReturn!
   }
 }

@@ -28,8 +28,23 @@
             <img alt="Card" [src]="profesional.photo ">
         </ng-template>
         Proxima Hora Disponible: **MUY PRONTO**
+        <br>
+        <b>Valor Sesion Particular:</b><br>
+        ${{profesional.valor}}
+                <br><br>
+        <p-button label="Agendar Hora" (onClick)="submit(profesional)" ></p-button>
+    </p-card>
+
+</div>
+<div class="row row-cols-auto center" *ngIf="!especialidadFlag && selectEspecialidad">
+
+    <p-card class="col-md-auto" *ngFor="let n of numSequence(4)" [style]="{'width': '15rem', 'margin-top': '1em'}">
+        <p-skeleton width="10rem" height="4rem" borderRadius="16px"></p-skeleton>
+        <br>
+        <p-skeleton height="2rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
+        <br>
+        <p-skeleton height="2rem" styleClass="mb-2" borderRadius="16px"></p-skeleton>
         <br><br>
-        <p-button label="Agendar Hora" (onClick)="modalProfesional(profesional)" ></p-button>
     </p-card>
 </div>
 
