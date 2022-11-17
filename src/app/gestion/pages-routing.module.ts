@@ -13,7 +13,6 @@ import { configSessionResolver } from '../core/resolvers/configSession.resolver'
 import { AbrirAgendaComponent } from './pages/Profesionales/abrir-agenda/abrir-agenda.component';
 import { abrirAgendaResolver } from '../core/resolvers/abrirAgenda.resolver';
 import { profesionalGuard } from '../shared/profesional.guard';
-import { MeetComponent } from './pages/meet/meet.component';
 
 
 
@@ -90,10 +89,6 @@ const routes: Routes = [
     ],
     
   },
-  {
-    path: 'meeting',
-    component: MeetComponent
-  }
 
 ];
 

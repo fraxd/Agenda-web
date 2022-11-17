@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ export class HubsaludComponent implements OnInit {
 
   items: MenuItem[];
 
-  constructor() { }
+  constructor(private auth:AuthService) { }
 
   ngOnInit(): void {
     this.items = [
@@ -23,12 +24,23 @@ export class HubsaludComponent implements OnInit {
       {
         label: 'Mis horas',
         icon: 'pi pi-fw pi-calendar',
+        routerLink: ['misHoras']
       },
       {
         label: 'Editar Perfil',
-        icon: 'pi pi-fw pi-user'
-      }
+        icon: 'pi pi-fw pi-user',
+        routerLink: ['editProfile']
+
+      },
+      {
+        label:'Cerrar Sesión',
+        icon:'pi pi-fw pi-power-off',
+        command:()=> this.logOut()
+    }
     ]
   }
 
+  logOut(){
+    this.auth.logOut();
+  }
 }

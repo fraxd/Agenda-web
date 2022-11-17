@@ -18,16 +18,19 @@ export class sesiones {
             payment_id: '',
             timeStamp: Date.now(),
             uidPaciente: uidPaciente,
+            uidReserva: uidUnico,
+            status: 'programada'
         });
     }
-
+    // simplemente registra que el pago fue fallido
     anularReserva(db:admin.firestore.Firestore,uidUnico:string){
         return db.collection('sesionesReserva').doc(uidUnico).update({
             pago: 'Fallido',
+            status:'cancelada'
         });
 
     }
-
+    //Confirma la reserva y registra en la db
     confirmarReserva(db:admin.firestore.Firestore,uidUnico:string,payment_id:number, uidProfesional:string, uidPaciente:string, especialidad:string, idEvento:String){
 
         console.log('Id unico confirmado',uidUnico);

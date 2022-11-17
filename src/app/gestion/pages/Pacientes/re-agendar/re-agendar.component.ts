@@ -1,33 +1,44 @@
 import { Component, OnInit } from '@angular/core';
-import { AgendarHoraService } from 'src/app/core/services/pacientes/agendar-hora.service';
-
-// Imports para el calendario
 import { CalendarOptions, defineFullCalendarElement, EventClickArg } from '@fullcalendar/web-component';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import esLocale from '@fullcalendar/core/locales/es';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for selectable
-import { ActivatedRoute, Router } from '@angular/router';
 import { session } from 'src/app/core/interfaces/sesion.interface';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { AgendarHoraService } from 'src/app/core/services/pacientes/agendar-hora.service';
+import { sesionReserva } from 'src/app/core/interfaces/sesion-reserva.interface';
+import { GestionService } from 'src/app/core/services/pacientes/gestion.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-select-hora',
-  templateUrl: './select-hora.component.html',
-  styleUrls: ['./select-hora.component.css']
+  selector: 'app-re-agendar',
+  templateUrl: './re-agendar.component.html',
+  styleUrls: ['./re-agendar.component.css'],
+  providers: [MessageService]
 })
-export class SelectHoraComponent implements OnInit {
+export class ReAgendarComponent implements OnInit {
 
+  displayResponsive: boolean = false;
   events: any[] = [];
-  constructor( private _ac:ActivatedRoute, private router:Router, private agendaService: AgendarHoraService) {
+  evento: sesionReserva;
+  fecha:string;
+  hora:string;
+  nuevoStart:string;
+  nuevoEnd:string;
+  nuevoEventoId:string;
+
+  constructor( private _ac:ActivatedRoute, private router:Router, private agendaService: AgendarHoraService, 
+              private paciente: GestionService, private messageService: MessageService ) {
     let temp = _ac.snapshot.data;
     let sesiones:session[] = temp['data'];
     this.events = sesiones;
     this.calendarOptions.events = sesiones;
-
+    this.evento = this.paciente.getSesion();
    }
 
   ngOnInit(): void {
+    if(!this.evento)this.router.navigate(['/hubsalud']);
     if(!customElements.get('full-calendar')) defineFullCalendarElement(); // verifica que no este inicializado ya.
 
   }
@@ -67,10 +78,13 @@ export class SelectHoraComponent implements OnInit {
 
   eventoDetails(infoEvent: EventClickArg) {
     let evento = this.returnEvento(infoEvent.event.id);
-    this.agendaService.setSesion(evento);
-    console.log(evento.start)
+    this.fecha = new Date(evento.start).toLocaleDateString();
+    this.hora = new Date(evento.start).toLocaleTimeString();
+    this.nuevoStart = evento.start;
+    this.nuevoEnd = evento.end;
+    this.nuevoEventoId = evento.id;
+    this.displayResponsive = true;
 
-    this.router.navigate(['/hubsalud/agendar/reservar', infoEvent.event.id]);
   }
 
   returnEvento(id: string) {
@@ -83,7 +97,14 @@ export class SelectHoraComponent implements OnInit {
     return eventoReturn!
   }
 
-  goBack(){
-    this.router.navigate(['/hubsalud/agendar']);
+  reAgendar(){
+    this.messageService.add({severity:'success', summary:'Re-Agendamiento en proceso...', detail:'Seras redirigido al hubSalud'});
+    this.agendaService.reAgendar(this.evento.uidReserva, this.evento.uidEvento, this.evento.uidProfesional, this.evento.especialidad,
+                            this.nuevoStart, this.nuevoEnd, this.nuevoEventoId).subscribe( res =>{
+                              console.log(res)
+                              this.router.navigate(['/hubsalud/misHoras']);
+                            })
   }
+
+
 }

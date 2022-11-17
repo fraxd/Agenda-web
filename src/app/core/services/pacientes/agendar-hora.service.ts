@@ -113,5 +113,20 @@ export class AgendarHoraService {
   
   
   }
+
+  // Llama al backend para reagendar la cita
+  reAgendar(uidReserva:string, uidEvento:string, uidProfesional:string, 
+            especialidad:string,nuevoStart:string, nuevoEnd:string, nuevoEventoId:string){
+    return this.http.post(`${ environment.urlBackEnd}/api/reAgendar`,{
+      uidReserva: uidReserva,
+      uidEvento: uidEvento,
+      uidProfesional: uidProfesional,
+      especialidad: especialidad,
+      uidPaciente: this.uidPaciente,
+      nuevoStart: nuevoStart,
+      nuevoEnd: nuevoEnd,
+      nuevoEventoId: nuevoEventoId
+      });  
+  }
 }
 

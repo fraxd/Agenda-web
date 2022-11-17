@@ -37,13 +37,12 @@ export class AuthService {
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('User')!);
       } else {
-        // localStorage.setItem('user', 'null');
         localStorage.clear();
       }
     });
   }
 
-  // METODO LOGIN DE PRUEBA ********
+  // METODO LOGIN ********
   login({ email, password }: LoginData) {
     const rol = localStorage.getItem('userRol');
     this.afauth.signInWithEmailAndPassword(email, password)
@@ -63,7 +62,7 @@ export class AuthService {
         return error;
       });
   }
-  // Metodo Register prueba
+  // Metodo Register
   async register({ email, password }: LoginData, nombre: string) {
     try {
       const result = await this.afauth.createUserWithEmailAndPassword(email, password);
@@ -156,7 +155,29 @@ export class AuthService {
       .valueChanges()
   }
 
+  // reautentificacion para funciones de alto "riesgo"
+  async reLogin(password:string):Promise<boolean>{
+    await this.afauth.signInWithEmailAndPassword(this.userData.email, password).then( res =>{
+      return true;
+    }).catch( err =>{
+      return false;
+    })
 
+    return false;
+
+  }
+
+  updatePassword(password: string) {
+    this.afauth.currentUser.then(user => user?.updatePassword(password)).then( res =>{
+      console.log(res)
+      return res;
+    }).catch( err =>{
+      console.log(err)
+      return err;
+    })
+
+
+  }
   fireBaseError(code: string) {
 
     switch (code) {

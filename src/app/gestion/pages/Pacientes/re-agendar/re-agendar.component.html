@@ -1,0 +1,27 @@
+<p-card header="Re Agendar">
+    <b>¡Tu cita sigue vigente hasta que confirme el cambio!</b>
+    <p>Recuerda que tu link de conexion a zoom seguira siendo el mismo.</p>
+    <full-calendar [options]='calendarOptions'></full-calendar>
+</p-card>
+
+
+<!-- MODAL Para que confirme la nueva hora-->
+
+<p-dialog header="Confirmacion" [(visible)]="displayResponsive" [breakpoints]="{'960px': '75vw'}" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false" [modal]="true" >
+    <p>Estas a punto de modificar tu cita con el profesional. Favor Confirmar los detalles.</p>
+    <ul>
+        <li>Profesional: {{evento.nombreProfesional}}</li>
+        <li>Fecha Nueva: {{fecha}}</li>
+        <li>Hora Nueva: {{hora}}</li>
+    </ul>
+
+    <b>¿Estas seguro de la nueva fecha?</b>
+        <ng-template pTemplate="footer">
+        <p-button (click)="displayResponsive=false" label="No" styleClass="p-button-text"></p-button>
+        <p-button (click)="displayResponsive=false" label="Si" styleClass="p-button-text" (onClick)="reAgendar()"></p-button>
+        </ng-template>
+</p-dialog>
+
+
+<p-toast></p-toast>

@@ -17,6 +17,11 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {SkeletonModule} from 'primeng/skeleton';
+import {PasswordModule} from 'primeng/password';
+import {ToastModule} from 'primeng/toast';
+import {TableModule} from 'primeng/table';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DialogModule} from 'primeng/dialog';
 
 
 
@@ -26,6 +31,8 @@ import { ReservarComponent } from './agendar-paciente/reservar/reservar.componen
 import { FailPaymentComponent } from './fail-payment/fail-payment.component';
 import { AgendaRealizadaComponent } from './agenda-realizada/agenda-realizada.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { MisHorasComponent } from './mis-horas/mis-horas.component';
+import { ReAgendarComponent } from './re-agendar/re-agendar.component';
 
 
 
@@ -38,7 +45,9 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     ReservarComponent,
     FailPaymentComponent,
     AgendaRealizadaComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    MisHorasComponent,
+    ReAgendarComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +65,12 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     CheckboxModule,
     ProgressBarModule,
     InputNumberModule,
-    SkeletonModule
+    SkeletonModule,
+    PasswordModule,
+    ToastModule,
+    TableModule,
+    ConfirmDialogModule,
+    DialogModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 

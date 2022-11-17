@@ -21,7 +21,7 @@
     "express": "^4.18.2",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^4.0.2",
-    "googleapis": "^109.0.1",
+    "ical-generator": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
     "mercadopago": "^1.5.14",
     "request-promise": "^4.2.6",

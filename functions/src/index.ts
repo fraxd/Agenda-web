@@ -8,11 +8,13 @@ import { notifyEmail } from "./notifyEmail";
 import * as dotenv from 'dotenv'
 import * as mercadopago from 'mercadopago'
 import { sesiones } from "./sesiones";
+import { pacienteGestion } from "./pacienteGestion";
 
 const serviceAccount = require("./serviceAccountKey.json");
 const notify = new notifyEmail();
 const gestion = new gestionAgenda();
-const sesion = new sesiones()
+const sesion = new sesiones();
+const paciente = new pacienteGestion
 const jwt = require("jsonwebtoken");
 const requestPromise = require("request-promise");
 
@@ -46,8 +48,6 @@ app.post('/meeting', (req, res) => {
   const especialidad = req.body.especialidad as string;
   const uidProfesional = req.body.uidProfesional as string;
 
-  console.log('PROBANDDOOOO',uidProfesional);
-
     let email = "fraxd98@gmail.com"; // your zoom developer email account
     var options = {
     method: "POST",
@@ -73,6 +73,7 @@ app.post('/meeting', (req, res) => {
     requestPromise(options)
     .then(function (response: any) {
         gestion.updateLinkMeeting(db,uidReserva,idEvento,response.start_url,response.join_url,especialidad,uidProfesional);
+        notify.emailLinkZoom(db,uidReserva,response.join_url);
         res.json(response);
       })
     .catch(function (err: any) {
@@ -82,8 +83,13 @@ app.post('/meeting', (req, res) => {
     });
 });
   
-//// FALTA QUE PACIENTE VEA EL LISTADO DE HORAS DISPONIBLES, EDICION DE PERFIL BASICA Y CAMBIO DE CONTRASEÑA.
-// PERMTIR TAL VEZ RE AGENDAR HORA EN CASO DE NO PODER ASISTIR A LA HORA AGENDADA.
+//Retorna un array con las sesiones del paciente con estado programadas o Realizadas
+app.get('/getSesiones', (req, res) => {
+  const uid = req.query.uid as string;
+  paciente.getSesionesXpaciente(db,uid).then((sesiones:any) => {
+    res.json(sesiones);
+  });
+})
 
 // Genera el link de pago y registra en la bd la intencion de pago. 
 app.post('/payment', (req, res) => {
@@ -257,7 +263,7 @@ app.post('/newSesion', async (req, res) => {
 })
 
 
-//Se anula la reserva de la sesion -- osea no se realiza
+//Se anula la reserva de la sesion -- osea no se realiza DADO A QUE EL PACIENTE NO PAGA
 app.post('/anularReserva', async (req, res) => {
   res.json(sesion.anularReserva(db, req.body.uid));
 });
@@ -277,7 +283,22 @@ app.post('/confirmarReserva', async (req, res) => {
                             req.body.idEvento))
 })
 
+// Anulacion de cita por parte del paciente
+app.post('/anularSesion', async (req,res) =>{
+  paciente.anularCita(db, req.body.idReserva, req.body.idProfesional, req.body.especialidad, req.body.uidEvento);
 
+  res.json('ok');
+
+})
+
+// Reagendar hora 
+app.post('/reagendar',async (req,res)=>{
+  notify.sendEmailNewReserva(db,req.body.uidProfesional,req.body.uidPaciente, req.body.nuevoEventoId,req.body.especialidad) // enviar correo al usuario.
+  paciente.reagendarcita(db, req.body.uidReserva, req.body.uidEvento, req.body.uidProfesional, req.body.especialidad, 
+                              req.body.uidPaciente, req.body.nuevoStart, req.body.nuevoEnd,req.body.nuevoEventoId).then( ()=>{
+                                res.json('ok')
+                              })
+})
 
 exports.api = functions.https.onRequest(app);
 

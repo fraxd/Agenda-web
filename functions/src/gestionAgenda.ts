@@ -145,9 +145,6 @@ export class gestionAgenda {
           sessionRef.create(sesion).catch(err =>{
             console.log(err);
           })
-            // colRef.add(sesion).catch( err =>{
-            //   console.log(err)
-            // }) 
         }); 
 
         let fechaDB:Details = {

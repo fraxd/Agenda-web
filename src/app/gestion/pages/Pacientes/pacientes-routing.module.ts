@@ -7,8 +7,11 @@ import { AgendarPacienteComponent } from './agendar-paciente/agendar-paciente.co
 import { ReservarComponent } from './agendar-paciente/reservar/reservar.component';
 import { SelectEspecialidadProfesionalComponent } from './agendar-paciente/select-especialidad-profesional/select-especialidad-profesional.component';
 import { SelectHoraComponent } from './agendar-paciente/select-hora/select-hora.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { FailPaymentComponent } from './fail-payment/fail-payment.component';
 import { HubsaludComponent } from './hubsalud/hubsalud.component';
+import { MisHorasComponent } from './mis-horas/mis-horas.component';
+import { ReAgendarComponent } from './re-agendar/re-agendar.component';
 
 
 const routes: Routes = [
@@ -18,6 +21,15 @@ const routes: Routes = [
     data: { titulo: 'HubSalud'},
     canActivate: [AuthGuard],
     children: [
+      {
+        path: '',
+        redirectTo: 'misHoras',
+        pathMatch: 'full',
+      },
+      {
+        path: 'misHoras',
+        component: MisHorasComponent,
+      },
       {
         path: 'agendar',
         component: AgendarPacienteComponent,
@@ -58,6 +70,18 @@ const routes: Routes = [
         path: 'agendado',
         component: AgendaRealizadaComponent,
         data: { titulo: 'Agenda Realizada'}
+      },
+      {
+        path: 'editProfile',
+        component: EditProfileComponent,
+        data: { titulo: 'Agenda Realizada'}
+      },
+      {
+        path: 'reagendar',
+        component: ReAgendarComponent,
+        resolve: {
+          data: AgendaPacienteResolver
+        }
       }
 
     ]
