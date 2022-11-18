@@ -1,3 +1,112 @@
-<p-card header="Dashboard">
-    Bienvenido!
-</p-card>
+<div class="grid">
+
+    <div class="Profesionales" *ngIf="flagProfesional">
+        <div class="row justify-content-md-center "> <!-- Primera fila de card-->
+            <div class="col">
+                <p-card>
+                    <b>Citas Agendadas para hoy:</b> <br>
+                    <b>Tienes {{reservasToday}} citas</b>
+                    <br>
+                    <p><small style="color:rgb(4, 121, 176);">Reservas para la Semana: <b>{{reservasWeek}}</b></small></p>
+                </p-card>
+            </div>
+            <div class="col" *ngIf="false">
+                <p-card>
+                    <b>Cupos disponibles para esta Semana:</b>
+                    <h6>Hola k tal</h6>
+                </p-card>
+            </div>
+            <div class="col">
+                <p-card>
+                    <b>Ultima fecha Aperturada:</b><br>
+                    <b style="color:rgb(133, 0, 186);"> {{lastOpen | date: 'dd/MM/yyyy'}}</b>
+                    br
+                    <div class="row col center">
+                        <button pButton pRipple type="button" label="Abrir Agenda" (onClick)="redirectAbrir" class="p-button-outlined p-button-rounded p-button-help"></button>
+                    </div>
+                </p-card>
+            </div>
+        </div>
+        <br>
+        <!-- Segunda fila de detalles-->
+        <div class="row justify-content-md-center">
+            <div class="col">
+                <p-card>
+                    <p-table #dt [value]="sesiones" dataKey="id" [rowHover]="false" [rows]="10" [showCurrentPageReport]="false"
+                    [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="false"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0">
+                    <ng-template pTemplate="caption">
+                        <div class="table-header">
+                            Horas Agendadas
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="start" style="min-width: 10rem">
+                                <div class="flex justify-content-between align-items-center">
+                                    Fecha
+    
+                                </div>
+                            </th>
+                            <th pSortableColumn="date" style="min-width: 8rem">
+                                <div class="flex justify-content-between align-items-center">
+                                    Hora
+                                </div>
+                            </th>
+                            <th pSortableColumn="profesional" style="min-width: 12rem">
+                                <div class="flex justify-content-between align-items-center">
+                                    Paciente
+                                </div>
+                            </th>
+                            
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-sesion>
+                        <tr class="p-selectable-row">
+                            <td>
+                                <span class="p-column-title">Fecha</span>
+                                <span class="image-text">{{sesion.start | date: 'dd/MM/yyyy'}}</span>
+                            </td>
+                            <td>
+                                <span class="p-column-title">Date</span>
+                                {{sesion.start | date: 'HH:mm'}}
+                            </td>
+                            <td>
+                                <span class="p-column-title">Paciente</span>
+                                <span class="image-text">{{sesion.pacienteUID}}</span>
+                            </td>
+                            
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="8">No Tienes sesiones agendadas aun.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <br>
+                <div class="row col center">
+                    <button pButton pRipple type="button" label="Ver todas" (onclick)="redirect" class="p-button-rounded p-button-success"></button>
+    
+                </div>
+                <!-- Tal vez poner una tabla con los proximos pacientes y chao era.-->
+                </p-card>
+            </div>
+            <!-- <div class="col">
+                <p-card>
+    
+                    la idea aca era mostrar un grafico y esas cosas
+                </p-card>
+            </div> -->
+        </div>
+    </div>
+   
+    <div class="admin">
+        
+        No implementado.
+
+    </div>
+
+</div>
+
+<!-- Mañana 12:00 el proyecto ya subido-->

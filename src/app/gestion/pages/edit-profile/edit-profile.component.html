@@ -1,0 +1,60 @@
+<p-card header="Editar Perfil">
+
+    <h6>Editar Contraseña</h6>
+    <p *ngIf="!reLogeo">Para editar tu contraseña debemos validar tu identidad</p>
+    <div class="row justify-content-md-center" *ngIf="!reLogeo">
+        <div class="col-md-auto">
+            <p-password name="oldPassword" ngDefaultControl [(ngModel)]="oldPassword" [toggleMask]="true"  ></p-password>
+            
+        </div>
+        <div class="col-md-auto">
+            <button pButton pRipple type="button" (click)="oldPasswordVerify()" label="Verificar" (disabled)="verifyPassword()" ></button>
+        </div>
+
+    </div>
+<br>
+    <div class="row justify-content-md-center" *ngIf="reLogeo">
+        <div class="col-md-auto">
+            <b>Ingrese contraseña: </b>
+            <p-password name="password" ngDefaultControl[(ngModel)]="password" [toggleMask]="true" [disabled]="reLogeo">
+                <ng-template pTemplate="header">
+                    <h6>Escoge una contraseña</h6>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <p-divider></p-divider>
+                    <p class="mt-2">Suguerencias</p>
+                    <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                        <li> Al menos una Minuscula</li>
+                        <li> Al menos una Mayuscula</li>
+                        <li> Al menos un Numero</li>
+                        <li> Minimo 8 caracteres</li>
+                    </ul>
+                </ng-template>
+            </p-password>  
+        </div>
+        <div class="col-md-auto">
+            <b>Re ingrese la contraseña: </b>
+            <p-password name="passwordVerify" ngDefaultControl [(ngModel)]="passwordVerify" [toggleMask]="true" id="passwordVerify" ></p-password>
+
+        </div>
+
+        <div class="col-md-auto">
+            <button pButton pRipple type="button" (click)="submit()" label="Actualizar" ></button>
+        </div>
+    </div>
+    <br>
+
+    <p-divider type="dashed">
+        <b>Cambiar Foto de Perfil</b>
+    </p-divider>
+
+    <h6>Editar foto de perfil</h6>
+    <label> Seleciona Imagen a subir: </label>
+    <input type="file" id="myFile"  accept="image/png, image/jpeg" (input)="saveRef($event)"/> <br /><br />
+    <!-- <p-fileUpload mode="basic" name="demo[]" accept="image/*" (maxFileSize)=1000000 (onSelect)="saveRef($event)"></p-fileUpload> -->
+    <button pButton pRipple type="button" (click)="chooseFile()" label="Actualizar" disabled="eventFlag"></button>
+
+    
+</p-card>
+
+<p-toast></p-toast> <!-- Toast respecto contraseña-->

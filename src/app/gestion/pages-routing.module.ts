@@ -1,7 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
-import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { AuthGuard } from '../shared/auth.guard';
 import { AgendaDisponibleComponent } from './pages/Profesionales/agenda-disponible/agenda-disponible.component';
@@ -13,6 +12,7 @@ import { configSessionResolver } from '../core/resolvers/configSession.resolver'
 import { AbrirAgendaComponent } from './pages/Profesionales/abrir-agenda/abrir-agenda.component';
 import { abrirAgendaResolver } from '../core/resolvers/abrirAgenda.resolver';
 import { profesionalGuard } from '../shared/profesional.guard';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 
 
 
@@ -28,11 +28,6 @@ const routes: Routes = [
         path: '',
         component: DashboardComponent,
         data: { titulo: 'Dashboard'}
-      },
-      {
-        path: 'account-settings',
-        component: AccountSettingsComponent,
-        data: { titulo: 'Estilos'}
       },
       // PROFESIONAL OPCIONES ******* ------
       {
@@ -80,6 +75,11 @@ const routes: Routes = [
             data: { titulo: 'Disponibilidad Horaria'},
           }
         ]
+      },
+      {
+        path: 'editar-perfil',
+        component: EditProfileComponent,
+        data: { titulo: 'Editar Perfil'},
       },
       {
         path: 'admin',

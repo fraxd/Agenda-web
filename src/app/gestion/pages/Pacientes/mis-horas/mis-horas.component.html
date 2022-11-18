@@ -14,6 +14,11 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
+                <th pSortableColumn="status" style="min-width: 14rem">
+                    <div class="flex justify-content-between align-items-center">
+                        status
+                    </div>
+                </th>
                 <th pSortableColumn="especialidad" style="min-width: 14rem">
                     <div class="flex justify-content-between align-items-center">
                         Especialidad
@@ -62,6 +67,10 @@
             <tr class="p-selectable-row">
                 <td>
                     <span class="p-column-title">especialidad</span>
+                    {{sesion.status}}
+                </td>
+                <td>
+                    <span class="p-column-title">especialidad</span>
                     {{sesion.especialidad}}
                 </td>
                 <td>
@@ -70,7 +79,7 @@
                 </td>
                 <td>
                     <span class="p-column-title">Fecha</span>
-                    <span class="image-text">{{sesion.timeStart | date: 'MM/dd/yyyy'}}</span>
+                    <span class="image-text">{{sesion.timeStart | date: 'dd/MM/yyyy'}}</span>
                 </td>
                 <td>
                     <span class="p-column-title">Date</span>
@@ -78,7 +87,7 @@
                 </td>
 
                 <td style="text-align: center">
-                    <button pButton type="button" class="p-button-secondary" icon="pi pi-video"
+                    <button pButton type="button" class="p-button-secondary" icon="pi pi-video" *ngIf="!(sesion.uidReserva == sesionCancelada.uidReserva) || sesion.status=='cancelada'"
                         (click)="navigate(sesion.urlPaciente)"></button>
                 </td>
                 <td style="text-align: center">
@@ -102,3 +111,10 @@
 </p-card>
 
 <p-toast></p-toast>
+<p-dialog header="Anulacion Cita" [(visible)]="display" [modal]="true">
+    <b>Estimad@:</b>
+    <p>Lamentablemente Su hora con el profesional {{sesionCancelada.nombreProfesional}} a sido cancelada por motivos de fuerza mayor.</p>
+    <p>Te invitamos a Re-agendarla en el siguiente link.</p>
+    <button pButton pRipple type="button" label="Re-agendar" (click)="anular(sesionCancelada)" class="p-button-rounded p-button-info"></button>
+
+</p-dialog>

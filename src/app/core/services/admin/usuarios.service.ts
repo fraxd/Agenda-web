@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { environment } from '../../../../environments/environment';
+import { sesionReserva } from '../../interfaces/sesion-reserva.interface';
 import { User } from '../../interfaces/User.interface';
 import { AuthService } from '../auth.service';
 
@@ -70,6 +71,13 @@ export class UsuariosService {
     return this.http.post(`${ environment.urlBackEnd }/api/abrirAgenda?uid=${usuario.uid}&profesional=${usuario.displayName}&especialidad=${usuario.especialidad}`,{fecha});
   }
 
+  getSesiones(uidProfesional:string){
+    return this.http.get<sesionReserva[]>(`${environment.urlBackEnd}/api/getSesionesProfesionalTodas?uid=${uidProfesional}`);
 
+  }
+
+  anularSesion(idReserva:string, idProfesional: string, especialidad:string, uidEvento:string){
+    return this.http.post(`${environment.urlBackEnd}/api/anularSesion`, {idReserva, idProfesional, especialidad, uidEvento});
+  }
 
 }

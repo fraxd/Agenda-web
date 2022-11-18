@@ -1,59 +1,11 @@
-<!-- <div class="background">
-    <div class="container ">
-
-        <div  *ngIf="!loading" class="card text-center bg-transparent">
-            <div class="card-header bg-light">
-                <b> Registrate </b>
-            </div>
-            <div class="card-body p-4 shadow-lg p-3 mb-5 bg-body rounded">
-                <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
-                    <label style="float: left ;">Email</label>
-                    <input class="form-control m-1" type="Email" placeholder="Ingree su Email" required
-                        formControlName="email">
-                    <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['required'] "
-                        class="text-danger"> Este campo es Requerido</div>
-                    <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['email'] "
-                        class="text-danger"> ¿Esta bien escrito el correo? </div>
-
-                    <label style="float: left ;">Contraseña</label>
-                    <input class="form-control m-1" type="Password" placeholder="Ingrese su contraseña" required
-                        formControlName="password">
-                    <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['required'] "
-                        class="text-danger"> Este campo es Requerido</div>
-                    <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['minlength'] "
-                        class="text-danger"> Ups' tu contraseña es muy corta </div>
-
-                    <label style="float: left ;">Confirmar Contraseña</label>
-                    <input class="form-control m-1" type="Password" placeholder="Ingrese su contraseña nuevamente"
-                        required formControlName="confirmPassword">
-                    <div *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.errors?.['required'] "
-                        class="text-danger"> Este campo es Requerido</div>
-                    <div *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.errors?.['minlength'] "
-                        class="text-danger"> Ups' tu contraseña es muy corta </div>
-
-                    <button type="submit" class="btn btn-primary w-100 mt-3"
-                        [disabled]="registerForm.invalid">Ingresar</button>
-                    <button type="button" class="btn btn-success w-100 mt-3" (click)="ingresarGoogle()"> Ingresar Con
-                        Google</button>
-                    <label> ¿tienes cuenta? <a href="#">Ingresa aqui</a></label>
-                </form>
-            </div>
-
-
-        </div>
-        <app-spinner *ngIf="loading" ></app-spinner>
-    </div>
-
-</div> -->
-
-<!-- SEGUNDA VERSION NO FINALIZADA-->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
 <section id="wrapper" class="login-register login-sidebar" style="background-image:url(../assets/images/background/login-register.jpg);">
     <div class="login-box card">
         <div class="card-body">
             <form class="form-horizontal form-material" (ngSubmit)="onSubmit()" [formGroup]="registerForm">
-                <a href="javascript:void(0)" class="text-center db"><img src="../assets/images/logo-icon.png" alt="Home" /><br/><img src="../assets/images/logo-text.png" alt="Home" /></a>
+                <!-- <a href="javascript:void(0)" class="text-center db"><img src="../assets/images/logo-icon.png" alt="Home" /><br/><img src="../assets/images/logo-text.png" alt="Home" /></a> -->
+                <a href="/" class="text-center db"><img src="../assets/images/Logo2.png" alt="Home" width="200em"/></a>
                 <h3 class="box-title m-t-40 m-b-0">Registrarse</h3><small>¡Crea tu cuenta y ten atenciones de calidad!.</small>
                 <div class="form-group m-t-20">
                     <div class="col-xs-12">
@@ -78,14 +30,14 @@
                 <div class="form-group row">
                     <div class="col-md-12">
                         <div class="checkbox checkbox-primary p-t-0">
-                            <input id="checkbox-signup" type="checkbox">
+                            <input id="checkbox-signup" type="checkbox" (change)="checkbox()">
                             <label for="checkbox-signup"> Acepto los terminos <a href="#">Terms</a></label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group text-center m-t-20">
                     <div class="col-xs-12">
-                        <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Registrarse</button>
+                        <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit"[disabled]="aceptoTems">Registrarse</button>
                     </div>
                 </div>
                 <div class="form-group m-b-0">

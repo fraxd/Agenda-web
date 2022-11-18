@@ -16,6 +16,5 @@ export class AgendaPacienteResolver implements Resolve<Observable<any>> {
 
     return this.http.get(`${ environment.urlBackEnd }/api/getAgendaProfesional?uid=${uidProfesional}&especialidad=${especialidadProfesional}`);
     
-
   }
 }

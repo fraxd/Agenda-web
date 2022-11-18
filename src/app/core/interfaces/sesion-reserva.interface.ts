@@ -10,6 +10,6 @@ export interface sesionReserva{
     uidReserva: string,
     uidPaciente: string,
     uidProfesional: string
-    status: string,
+    status?: string,
 
 }

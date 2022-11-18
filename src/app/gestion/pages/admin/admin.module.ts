@@ -21,6 +21,7 @@ import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {CalendarModule} from 'primeng/calendar';
+import { VerCitasComponent } from './ver-citas/ver-citas.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {CalendarModule} from 'primeng/calendar';
     UsuariosComponent,
     EditUsuarioComponent,
     ProfesionalesComponent,
-    AbrirAgendaComponent
+    AbrirAgendaComponent,
+    VerCitasComponent
   ],
   imports: [
     CommonModule,

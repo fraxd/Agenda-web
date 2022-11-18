@@ -47,7 +47,6 @@ export class AuthService {
     const rol = localStorage.getItem('userRol');
     this.afauth.signInWithEmailAndPassword(email, password)
       .then((result) => {
-        //this.setUserData(result.user);
         if (result.user?.emailVerified) {
           if (rol == 'paciente') {
             this.router.navigate(['/hubsalud']);

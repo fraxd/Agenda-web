@@ -16,6 +16,8 @@ export class MisHorasComponent implements OnInit {
 
   loading: boolean = true;
   col: any[];
+  display:boolean = false;
+  sesionCancelada: sesionReserva;
   sesiones: sesionReserva[] = [];
   constructor(private gestionPaciente: GestionService, private confirmationService:ConfirmationService, 
               private messageService: MessageService, private router:Router) { }
@@ -29,6 +31,14 @@ export class MisHorasComponent implements OnInit {
     ]
     this.gestionPaciente.getSesiones().subscribe((data:sesionReserva[])=>{
       this.sesiones = data;
+      this.sesiones.forEach( (sesion) => {
+        console.log(sesion.status)
+        if(sesion.status == 'Cancelada por el profesional'){
+          this.sesionCancelada = sesion;
+          this.display = true;
+          //this.messageService.add({severity:'info', summary:'Cita Cancelada', detail:'La cita con el profesional '+sesion.nombreProfesional+' fue cancelada por el profesional.'});
+        }
+      });
       this.loading = false;
       if(this.sesiones.length == 0){
         this.messageService.add({severity:'info', summary:'No tienes sesiones Agendadas.', detail:'Te redirigiremos a Agendar Hora.'});

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { User } from 'src/app/core/interfaces/User.interface';
@@ -15,7 +16,8 @@ export class ProfesionalesComponent implements OnInit {
 
   usuarios:User[];
   loading: boolean = true;
-  constructor(private usuarioService:UsuariosService, public dialogService: DialogService, private messageService: MessageService) { 
+  constructor(private usuarioService:UsuariosService, public dialogService: DialogService, private messageService: MessageService,
+    private router: Router) { 
     this.usuarioService.getListProfesionales().subscribe( res =>{
       this.usuarios = res
       this.loading = false;
@@ -44,6 +46,7 @@ export class ProfesionalesComponent implements OnInit {
   }
 
   verConsultas(usuario:User){
+    this.router.navigate(['/dashboard/admin/verCitasProfesional'], { queryParams: { uidProfesional: usuario.uid } });
     this.messageService.add({ severity: 'info', summary: 'No implementado aun.', detail: 'Via TeleMed' });
   }
 }

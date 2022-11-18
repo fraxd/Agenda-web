@@ -1,33 +1,62 @@
-<div>
-    <p-toast></p-toast>
-    <h6>Fecha</h6>
-    <p-calendar [(ngModel)]="eventStart" [disabled]="true"></p-calendar>
+<p-toast></p-toast>
+<div class="row justify-content-md-center">
+    <div class="col-md-auto">
+        <h6>Fecha</h6>
+        <p-calendar [(ngModel)]="eventStart" [disabled]="true"></p-calendar>
+
+    </div>
     <br>
-    <h6>Horario</h6>
-    <p-calendar [(ngModel)]="eventStart" [timeOnly]="true" [disabled]="true"></p-calendar>
-    <p-calendar [(ngModel)]="eventEnd"[timeOnly]="true" [disabled]="true"></p-calendar>
-    <br>
-    <h6>Estado Sesion</h6>
-    <p-selectButton [options]="estadoSesion" 
-                    [(ngModel)]="statusSesion" 
-                    optionLabel="label" 
-                    optionValue="value"
-                    [disabled]="flagSesion"
-                    ></p-selectButton>
-    <br>
+    <div class="col-md-auto">
+        <h6>Horario de Inicio y termino:</h6>
+        <p-calendar [(ngModel)]="eventStart" [timeOnly]="true" [disabled]="true"></p-calendar>
+        <p-calendar [(ngModel)]="eventEnd"[timeOnly]="true" [disabled]="true"></p-calendar>
+    </div>
 </div>
+<br>
+<div class="row justify-content-md-center">
+    <div class="col-md-auto">
+        <h6>Estado Sesion</h6>
+        <p-selectButton [options]="estadoSesion" 
+                        [(ngModel)]="statusSesion" 
+                        optionLabel="label" 
+                        optionValue="value"
+                        [disabled]="flagSesion"
+                        ></p-selectButton>
+    </div>
+</div >
+    <br>
 <div *ngIf="flagSesion">
-    <div class="row col-4">
-        <label >UID del Paciente</label>
-        <input type="text" pInputText [(ngModel)]="evento.pacienteUID" [disabled]="true" />
+    <div class="row justify-content-md-center">
+        <div class="row col-4">
+            <label >UID del Paciente</label>
+            <input type="text" pInputText [(ngModel)]="evento.pacienteUID" [disabled]="true" />
+        </div>
+        <div class="row col-4">
+            <label>Nombre del Paciente</label>
+            <input type="text" pInputText [(ngModel)]="nombrePaciente" [disabled]="true" />
+
+        </div>
+        <div class="row col-4">
+            <label >Fecha que Fue Agendada</label>
+            <input type="text" pInputText [(ngModel)]="fechaApertura"  [disabled]="true" />
+        </div>
     </div>
     <!-- Hay que implementar que muestre el nombre del paciente y tal vez ver su "perfil"-->
 
-    <label >Fecha que Fue Agendada</label>
-    <div class="row col-4">
-        <input type="text" pInputText [(ngModel)]="evento.fechaTomada" [disabled]="true" />
-    </div>
     
 </div>
 <br>
-<p-button label="Guardar Datos" (click)="submit()" ></p-button>
+<div class="row justify-content-md-center">
+    <div class="row col-4" *ngIf="flagSesion">
+        <button pButton pRipple type="button" label="Cancelar Hora" class="p-button-danger" (click)="cancelarHora()"></button>
+        
+    </div>
+
+    <div class="row col-4" *ngIf="!flagSesion">
+        <button pButton pRipple type="button" label="Guardar Datos" (click)="submit()" style="margin-left: 10px"></button>
+
+    </div>
+
+</div>
+
+<p-confirmDialog header="Confirmacion" icon="pi pi-exclamation-triangle"></p-confirmDialog>

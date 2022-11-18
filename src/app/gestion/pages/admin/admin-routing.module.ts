@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NuevoUsuarioComponent } from './nuevo-usuario/nuevo-usuario.component';
 import { ProfesionalesComponent } from './profesionales/profesionales.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { VerCitasComponent } from './ver-citas/ver-citas.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
     path:'listProfesionales',
     component: ProfesionalesComponent,
     data: { titulo: 'Profesionales'}
+  },
+  {
+    path: 'verCitasProfesional',
+    component: VerCitasComponent
   }
 ];
 

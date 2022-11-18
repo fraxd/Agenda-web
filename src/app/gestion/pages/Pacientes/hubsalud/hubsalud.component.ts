@@ -36,7 +36,7 @@ export class HubsaludComponent implements OnInit {
         label:'Cerrar Sesión',
         icon:'pi pi-fw pi-power-off',
         command:()=> this.logOut()
-    }
+     }
     ]
   }
 

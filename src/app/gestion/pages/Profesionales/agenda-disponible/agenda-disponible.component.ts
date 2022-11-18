@@ -113,11 +113,14 @@ export class AgendaDisponibleComponent implements OnInit {
 
   eventoDetails(infoEvent: EventClickArg) { // Modal que permite editar el evento
     let evento: session = this.returnEvento(infoEvent.event.id);
+    let fecha;
+    if(evento.fechaTomada) fecha = new Date(evento.fechaTomada!).toLocaleString();
     this.ref = this.dialogService.open(ModalEditEventComponent, {
       header: 'Editar Sesion',
       width: '70%',
       data: {
-        event: evento
+        event: evento,
+        fecha:fecha
       },
       contentStyle: { "overflow": "auto" },
       baseZIndex: 10000,

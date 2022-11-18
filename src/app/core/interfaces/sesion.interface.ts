@@ -4,11 +4,11 @@ export interface session {
     start: string,
     end: string,
     nombreProfesional: string,
-    uid: string,
+    uid: string,                // UID DEL PROFESIONAL
     especialidad: string,
     disponible: boolean,
     fechaTomada?: Date,  // Fecha de cuando se agendo la hora  --- OPCIONAL
     pacienteUID?: string, // uid del paciente  --- opcional mientras no este agendado
     idReserva?: string, // id de la reserva --- opcional mientras no este agendado (reserva es la informacion que se genera cuando se reserva la hora)
-    
+    urlProfesional?: string // url para unirse a zoom
 }

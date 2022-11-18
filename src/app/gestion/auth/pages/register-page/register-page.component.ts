@@ -17,6 +17,8 @@ export class RegisterPageComponent implements OnInit {
 
   usuario!: LoginData;
 
+  aceptoTems: boolean = true;
+
   constructor(private readonly fb: FormBuilder, private authService: AuthService, private readonly router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -26,24 +28,28 @@ export class RegisterPageComponent implements OnInit {
   }
   // registro
   onSubmit(): void {
-    const nombre = this.registerForm.value.nombre;
-    const email = this.registerForm.value.email;
-    const password = this.registerForm.value.password;
-    const confirmPassword = this.registerForm.value.confirmPassword;
-    this.usuario = { email, password };
-    if (password !== confirmPassword) {
-      this.toastr.error('Las contraseñas ingresadas deben coincidir', 'Error');
-      return;
-    }
+    let nombre:string;
+    if(this.registerForm.valid){
+      nombre = this.registerForm.value.nombre;
+      const email = this.registerForm.value.email;
+      const password = this.registerForm.value.password;
+      const confirmPassword = this.registerForm.value.confirmPassword;
+      this.usuario = { email, password };
+      if (password !== confirmPassword) {
+        this.toastr.error('Las contraseñas ingresadas deben coincidir', 'Error');
+        return;
+      }
 
-
-    this.authService.register(this.usuario,nombre).then(res => {
-      this.router.navigate(['/login']);
-      this.toastr.info('Le enviamos un correo para verificar su correo', 'Verificar Correo');
-    }).catch((error) => {
-      this.toastr.error(this.authService.fireBaseError(error.code), 'Error');
-
-    })
+      
+      
+      this.authService.register(this.usuario, nombre).then(res => {
+        this.router.navigate(['/login']);
+        this.toastr.info('Le enviamos un correo para verificar su correo', 'Verificar Correo');
+      }).catch((error) => {
+        this.toastr.error(this.authService.fireBaseError(error.code), 'Error');
+        
+      })
+    } else this.toastr.error('Debes completar el formulario correctamente.', 'Error');
 
   }
   /// inicializacion del formulario
@@ -65,6 +71,11 @@ export class RegisterPageComponent implements OnInit {
       console.log("se inicio correctaente con google", res);
     })
 
+  }
+
+  checkbox(){
+    if(this.aceptoTems) this.aceptoTems = false;
+    else this.aceptoTems = true;
   }
 
 }

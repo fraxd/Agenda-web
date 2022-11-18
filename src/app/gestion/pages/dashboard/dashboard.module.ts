@@ -5,6 +5,8 @@ import { DashboardComponent } from './dashboard.component';
 
 //Primeng Modulos
 import {CardModule} from 'primeng/card';
+import {TableModule} from 'primeng/table';
+import {ButtonModule} from 'primeng/button';
 
 
 @NgModule({
@@ -17,6 +19,8 @@ import {CardModule} from 'primeng/card';
 
     // Primeng Modulos
     CardModule,
+    TableModule,
+    ButtonModule
   ]
 })
 export class DashboardModule { }

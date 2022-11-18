@@ -16,6 +16,10 @@ import {DialogModule} from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {MenubarModule} from 'primeng/menubar';
+import {PasswordModule} from 'primeng/password';
+import {DividerModule} from 'primeng/divider';
+import {FileUploadModule} from 'primeng/fileupload';
 
 
 
@@ -26,7 +30,6 @@ import { AppRoutingModule } from '../app-routing.module';
 
 import { PagesComponent } from './pages.component';
 import { NoPageFoundComponent } from './no-page-found/no-page-found.component';
-import { AccountSettingsComponent } from './pages/account-settings/account-settings.component';
 import { AgendaDisponibleComponent } from './pages/Profesionales/agenda-disponible/agenda-disponible.component';
 import { DisponibilidadHorariaComponent } from './pages/Profesionales/disponibilidad-horaria/disponibilidad-horaria.component';
 import { DisponibilidadModule } from './pages/Profesionales/disponibilidad-horaria/disponibilidad.module';
@@ -34,6 +37,7 @@ import { DisponibilidadModule } from './pages/Profesionales/disponibilidad-horar
 import { AbrirAgendaComponent } from './pages/Profesionales/abrir-agenda/abrir-agenda.component';
 import { ModalEditEventComponent } from './pages/Profesionales/components/modal-edit-event/modal-edit-event.component';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 
 
 
@@ -41,17 +45,16 @@ import { DashboardModule } from './pages/dashboard/dashboard.module';
   declarations: [
     PagesComponent,
     NoPageFoundComponent,
-    AccountSettingsComponent,
     AgendaDisponibleComponent,
     DisponibilidadHorariaComponent,
     AbrirAgendaComponent,
     ModalEditEventComponent,
+    EditProfileComponent,
     
     ],
   exports: [
     PagesComponent,
     NoPageFoundComponent,
-    AccountSettingsComponent,
     
 
   ],
@@ -82,8 +85,10 @@ import { DashboardModule } from './pages/dashboard/dashboard.module';
     InputTextModule,
     DialogModule,
     ProgressSpinnerModule,
-    
-    
+    MenubarModule,
+    PasswordModule,
+    DividerModule,
+    FileUploadModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
