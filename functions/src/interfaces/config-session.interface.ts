@@ -10,6 +10,6 @@ export interface configSession{
 
 export interface horasSesion{
     activo: boolean;
-    horaInicio: Date;
-    horaFin: Date;
+    horaInicio: string;
+    horaFin: string;
 }

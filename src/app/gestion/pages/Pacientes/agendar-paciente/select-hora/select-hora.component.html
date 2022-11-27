@@ -1,11 +1,26 @@
-<p-card header="Agendar Hora">
+<p-card>
     <p-header>
-        <div class="ui-helper-clearfix" style="line-height: 1.87em">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <br>
+                <h5> <b> &nbsp; Mis Horas </b> </h5>
+            </div>
+            <div class="col-5">
+                <br>
+                <h5>Profesional: <b>{{nombreProfesional}}</b></h5>
+            </div>
+            <div class="col-3">
+                <br>
+                &nbsp; <button pButton pRipple type="button" label="Elegir otro profesional." (click)="goBack()" icon="pi pi-backward" class="p-button-outlined p-button-rounded p-button-help"> 
+                </button>
+            </div>
+        </div>
+        <!-- <div class="ui-helper-clearfix" style="line-height: 1.87em">
             <div class="button" style="float: right">
                 <button pButton pRipple type="button" label="Elegir otro profesional." (click)="goBack()" icon="pi pi-backward" class="p-button-outlined p-button-rounded p-button-help"> 
                 </button>
             </div>
-        </div>
+        </div> -->
     </p-header>
 
     <full-calendar [options]='calendarOptions'></full-calendar>

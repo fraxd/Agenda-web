@@ -12,12 +12,31 @@ export class pacienteGestion {
 
     const sesionesArray = sesiones.docs.map((doc) => doc.data());
     const sesionesFiltradas: any[] = [];
+    const fechaHoy = new Date();
     sesionesArray.forEach(function(sesion) {
-      if (sesion.status !== "cancelada") sesionesFiltradas.push(sesion);
+      const fechaSesion = new Date(sesion.timeStart);
+      if (sesion.status !== "cancelada" && fechaSesion >= fechaHoy) sesionesFiltradas.push(sesion);
     });
     return sesionesFiltradas;
   }
 
+  async getSesionesXpacientePast(db: admin.firestore.Firestore, uid: string) {
+    const sesiones = await db.collection("sesionesReserva")
+        .where("uidPaciente", "==", uid).get();
+
+    const sesionesArray = sesiones.docs.map((doc) => doc.data());
+    const sesionesFiltradas: any[] = [];
+    const fechaHoy = new Date();
+    sesionesArray.forEach(function(sesion) {
+      const fechaSesion = new Date(sesion.timeStart);
+      if (sesion.status !== "cancelada" && fechaSesion < fechaHoy) {
+        sesion.status = "Finalizada";
+        sesionesFiltradas.push(sesion);
+      }
+      if ( sesion.status == "cancelada") sesionesFiltradas.push(sesion);
+    });
+    return sesionesFiltradas;
+  }
   // Anular cita
   anularCita(db: admin.firestore.Firestore, idReserva: string,
       idProfesional: string, especialidad: string, uidEvento: string) {

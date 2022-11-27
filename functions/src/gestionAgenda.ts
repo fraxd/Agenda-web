@@ -54,9 +54,12 @@ export class gestionAgenda {
     let fecha: Date = new Date(fechaInicio); // basicamente creo una copia
     let timeCurrent: Time;
     let timeCurrentEnd: Time;
-    const fechaTemp: Date = new Date(sessionConfig.horaFin);
+    let fechaTemp: Date = new Date(sessionConfig.horaFin);
+    fechaTemp.setHours(fechaTemp.getHours() - 3);
     const difDay = fecha.getDay() - dia; // lunes =1, martes = 2, miercoles = 3
     const dateTemp = new Date(sessionConfig.horaInicio);
+    dateTemp.setHours(dateTemp.getHours() - 3);
+    // El paso de utc a hora local es hecho manualmente
     switch (difDay) {
       case 1:
         fecha.setDate(fecha.getDate() + 6);
@@ -79,10 +82,7 @@ export class gestionAgenda {
     }
     if (difDay < 0) fecha.setDate(fecha.getDate() - difDay); // ajuste de fecha al dia de la sesion
     // if (difDay > 0) fecha.setDate(fecha.getDate() + (difDay + 5)); // - 3
-    console.log("fecha Inicio:", fechaInicio);
-    console.log("dia Actual", dia);
-    console.log("fecha actual", fecha);
-    console.log("dif day", difDay);
+
     for (let i = 0; i < 5; i++) {
       timeCurrent = {hours: dateTemp.getHours(), minutes: dateTemp.getMinutes()};
       timeCurrentEnd = timeCurrent;
@@ -233,6 +233,18 @@ export class gestionAgenda {
   async getSesionesXProfesional(db: admin.firestore.Firestore, uid: string) {
     const sesiones = await db.collection("sesionesReserva")
         .where("uidProfesional", "==", uid).get();
+
+    const sesionesArray = sesiones.docs.map((doc) => doc.data());
+    const sesionesFiltradas: any[] = [];
+    sesionesArray.forEach(function(sesion) {
+      if (sesion.status !== "cancelada") sesionesFiltradas.push(sesion);
+    });
+    return sesionesFiltradas;
+  }
+
+  async getSesionesxPaciente(db: admin.firestore.Firestore, uid: string) {
+    const sesiones = await db.collection("sesionesReserva")
+        .where("uidPaciente", "==", uid).get();
 
     const sesionesArray = sesiones.docs.map((doc) => doc.data());
     const sesionesFiltradas: any[] = [];

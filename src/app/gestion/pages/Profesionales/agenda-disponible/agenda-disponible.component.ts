@@ -24,7 +24,6 @@ import { ModalEditEventComponent } from '../components/modal-edit-event/modal-ed
 export class AgendaDisponibleComponent implements OnInit {
 
   // Valores iniciales 
-  duracionSesion: number = 1800000; // para facilitar conversion: 1 minuto = 60.000 milisegundos esto se multiplica x duracion sesion
   configAgenda: configSession;
   dias: any[] = [];
   flag: boolean = false;
@@ -45,17 +44,15 @@ export class AgendaDisponibleComponent implements OnInit {
       this.calendarOptions.events = res;
       this.events = res;
       this.flag = true;
-    })
+    });
+    let modalBoolean = localStorage.getItem('modalAgenda') as string;
+    if(modalBoolean === 'true') this.displayModal = false;
+    console.log(modalBoolean);
 
   }
 
   ngOnInit(): void {
-    if(!customElements.get('full-calendar')) defineFullCalendarElement();
-    // Al parecr con la nueva config ya no es necesario.
-    // setTimeout(() => {
-    //   // this.calendarOptions.events = this.events;
-    //   console.log('flag timeout')
-    // }, 3000);
+    if (!customElements.get('full-calendar')) defineFullCalendarElement();
   }
 
   calendarOptions: CalendarOptions = {
@@ -69,36 +66,13 @@ export class AgendaDisponibleComponent implements OnInit {
     locale: esLocale,
     selectable: true,
     editable: false,
-    slotDuration: this.duracionSesion,
     themeSystem: 'bootstrap5',
     nowIndicator: true,
-    businessHours: this.getDias(),
-    hiddenDays: this.hiddenDay(), // muestra los dias de atencion segun el profesional - tal vez desactivar y habilitarlo para pacientes
     validRange: this.rangoVisualizacion(),
     eventClick: (infoEvent) => this.eventoDetails(infoEvent),
-    
-
-
-
+    height: 'auto'
 
   };
-
-  hiddenDay() {  // retorna del localStorage los dias que el profesional no atiende
-    const dias = JSON.parse((localStorage.getItem('NoAtencion') || ''));
-    localStorage.removeItem('NoAtencion');
-    return dias
-  }
-  getDias() { // retorna un array con los dias que atiende el profesional y su rango de horarios 
-    // no necesariamente retorna la disponibilda real
-    const dias = JSON.parse((localStorage.getItem('Dias') || ''));
-    localStorage.removeItem('Dias');
-    return dias
-
-  }
-  setearDatos() { // pone la durecion de ms a minutos
-    this.duracionSesion = this.configAgenda.duracion * 60000;
-    // dejo hasta aqui hasta saber que mas implementar      
-  }
 
   rangoVisualizacion() {  // Se define que el usuario podra ver maximo 40 dias en adelante el calendario
     const now = new Date();
@@ -114,13 +88,13 @@ export class AgendaDisponibleComponent implements OnInit {
   eventoDetails(infoEvent: EventClickArg) { // Modal que permite editar el evento
     let evento: session = this.returnEvento(infoEvent.event.id);
     let fecha;
-    if(evento.fechaTomada) fecha = new Date(evento.fechaTomada!).toLocaleString();
+    if (evento.fechaTomada) fecha = new Date(evento.fechaTomada!).toLocaleString();
     this.ref = this.dialogService.open(ModalEditEventComponent, {
       header: 'Editar Sesion',
       width: '70%',
       data: {
         event: evento,
-        fecha:fecha
+        fecha: fecha
       },
       contentStyle: { "overflow": "auto" },
       baseZIndex: 10000,
@@ -155,6 +129,9 @@ export class AgendaDisponibleComponent implements OnInit {
     }
   }
 
+  displayModalNotMore(){
+    this.displayModal = false;
+    localStorage.setItem('modalAgenda', 'true');
+  }
 
-  //Tal vez implementar funcion que permita crear nuevos cupos extraordinarios manualmente
 }

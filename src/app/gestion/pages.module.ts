@@ -38,6 +38,8 @@ import { AbrirAgendaComponent } from './pages/Profesionales/abrir-agenda/abrir-a
 import { ModalEditEventComponent } from './pages/Profesionales/components/modal-edit-event/modal-edit-event.component';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { LoadingComponent } from './pages/loading/loading.component';
+import { ListSesionesComponent } from './pages/profesionales/list-sesiones/list-sesiones.component';
 
 
 
@@ -50,6 +52,8 @@ import { EditProfileComponent } from './pages/edit-profile/edit-profile.componen
     AbrirAgendaComponent,
     ModalEditEventComponent,
     EditProfileComponent,
+    LoadingComponent,
+    ListSesionesComponent,
     
     ],
   exports: [

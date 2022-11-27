@@ -19,11 +19,13 @@ import { session } from 'src/app/core/interfaces/sesion.interface';
 export class SelectHoraComponent implements OnInit {
 
   events: any[] = [];
+  nombreProfesional: string;
   constructor( private _ac:ActivatedRoute, private router:Router, private agendaService: AgendarHoraService) {
     let temp = _ac.snapshot.data;
     let sesiones:session[] = temp['data'];
     this.events = sesiones;
     this.calendarOptions.events = sesiones;
+    this.nombreProfesional = localStorage.getItem('NombreProfesional') as string || 'Profesional';
 
    }
 

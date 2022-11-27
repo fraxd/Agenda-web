@@ -89,10 +89,18 @@ app.post("/meeting", (req, res) => {
       });
 });
 
-// Retorna un array con las sesiones del paciente con estado programadas o Realizadas
+// Retorna un array con las sesiones del paciente con estado programadas
 app.get("/getSesiones", (req, res) => {
   const uid = req.query.uid as string;
   paciente.getSesionesXpaciente(db, uid).then((sesiones: any) => {
+    res.json(sesiones);
+  });
+});
+
+// Retorna un array con las sesiones del paciente con estado Realizadas
+app.get("/getSesionesPast", (req, res) => {
+  const uid = req.query.uid as string;
+  paciente.getSesionesXpacientePast(db, uid).then((sesiones: any) => {
     res.json(sesiones);
   });
 });
@@ -180,7 +188,7 @@ app.get("/profesionalxespecialidades", async (req, res) => {
 
   setTimeout(() => {
     res.json(user);
-  }, 700);
+  }, 2000);
 });
 
 // Retorna un Array con el listado de usuarios en general
@@ -202,6 +210,18 @@ app.get("/getlistprofesionales", async (req, res) => {
     }
   });
   res.json(profesionales);
+});
+
+app.get("/getlistpacientes", async (req, res) => {
+  let userRef = await db.collection("users").get();
+  const usuarios = userRef.docs.map((doc) => doc.data());
+  let pacientes: any[] = [];
+  usuarios.forEach((usuario) => {
+    if (usuario.rol === "paciente") {
+      pacientes.push(usuario);
+    }
+  });
+  res.json(pacientes);
 });
 
 
@@ -339,5 +359,13 @@ app.get("/getSesionesProfesionalTodas", async (req, res)=>{
     res.json(sesiones);
   });
 });
+
+app.get("/getSesionesPacienteTodas", async (req, res)=>{
+  const uid = req.query.uid as string;
+  gestion.getSesionesxPaciente(db, uid).then((sesiones: any) => {
+    res.json(sesiones);
+  });
+});
+
 exports.api = functions.https.onRequest(app);
 

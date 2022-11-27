@@ -1,7 +1,11 @@
 <p-menubar [model]="items">
     <ng-template pTemplate="start">
-        <img src="../../../../../assets/images/icon.png" height="40" class="mr-2">
+        <a href="/hubsalud"><img src="../../../../../assets/images/icon.png" height="40" class="mr-2"></a>
     </ng-template>
+    <ng-template pTemplate="end">
+        <b>{{nombreUsuario}}</b>
+    </ng-template>
+
 </p-menubar>
 
 <router-outlet></router-outlet>

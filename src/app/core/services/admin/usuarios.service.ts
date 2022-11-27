@@ -32,9 +32,13 @@ export class UsuariosService {
   getListUsers(){
     return this.http.get<User[]>(`${ environment.urlBackEnd}/api/getListUser`);
   }
-
+  // Retorna Listado de profesionales
   getListProfesionales(){
     return this.http.get<User[]>(`${ environment.urlBackEnd}/api/getlistprofesionales`);
+  }
+
+  getListPacientes(){
+    return this.http.get<User[]>(`${ environment.urlBackEnd}/api/getlistpacientes`);
   }
 
   updateUser(usuario:User, photoUrl:string, rol:string,  especialidad?:string, ){
@@ -73,6 +77,11 @@ export class UsuariosService {
 
   getSesiones(uidProfesional:string){
     return this.http.get<sesionReserva[]>(`${environment.urlBackEnd}/api/getSesionesProfesionalTodas?uid=${uidProfesional}`);
+
+  };
+
+  getSesionesPaciente(uidPaciente:string){
+    return this.http.get<sesionReserva[]>(`${environment.urlBackEnd}/api/getSesionesPacienteTodas?uid=${uidPaciente}`);
 
   }
 

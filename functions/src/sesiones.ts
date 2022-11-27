@@ -21,7 +21,7 @@ export class sesiones {
       timeStamp: Date.now(),
       uidPaciente: uidPaciente,
       uidReserva: uidUnico,
-      status: "programada",
+      status: "Pendiente",
     });
   }
   // simplemente registra que el pago fue fallido

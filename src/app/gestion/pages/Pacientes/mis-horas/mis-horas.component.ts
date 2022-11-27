@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
 export class MisHorasComponent implements OnInit {
 
   loading: boolean = true;
-  col: any[];
   display:boolean = false;
   sesionCancelada: sesionReserva;
   sesiones: sesionReserva[] = [];
@@ -23,20 +22,12 @@ export class MisHorasComponent implements OnInit {
               private messageService: MessageService, private router:Router) { }
 
   ngOnInit(): void {
-    this.col =[
-      {field: 'especialidad', header: 'Especialidad'},
-      {field: 'nombreProfesional', header: 'Profesional'},
-      {field: 'timeStart', header: 'fecha'},
-
-    ]
     this.gestionPaciente.getSesiones().subscribe((data:sesionReserva[])=>{
       this.sesiones = data;
       this.sesiones.forEach( (sesion) => {
-        console.log(sesion.status)
         if(sesion.status == 'Cancelada por el profesional'){
           this.sesionCancelada = sesion;
           this.display = true;
-          //this.messageService.add({severity:'info', summary:'Cita Cancelada', detail:'La cita con el profesional '+sesion.nombreProfesional+' fue cancelada por el profesional.'});
         }
       });
       this.loading = false;
@@ -75,9 +66,8 @@ export class MisHorasComponent implements OnInit {
   });
 
   }
+  redirect(){
+    this.router.navigate(['/hubsalud/misHorasPasadas']);
+  }
 
 }
-
-
-/// RETORNA LOS DATOS BIEN ASI QUE VAMOS MEJORANDO JAJA
-

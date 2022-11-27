@@ -33,6 +33,7 @@ import { AgendaRealizadaComponent } from './agenda-realizada/agenda-realizada.co
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { MisHorasComponent } from './mis-horas/mis-horas.component';
 import { ReAgendarComponent } from './re-agendar/re-agendar.component';
+import { TodasLasHorasComponent } from './mis-horas/todas-las-horas/todas-las-horas.component';
 
 
 
@@ -47,7 +48,8 @@ import { ReAgendarComponent } from './re-agendar/re-agendar.component';
     AgendaRealizadaComponent,
     EditProfileComponent,
     MisHorasComponent,
-    ReAgendarComponent
+    ReAgendarComponent,
+    TodasLasHorasComponent
   ],
   imports: [
     CommonModule,

@@ -22,6 +22,8 @@ import {ToastModule} from 'primeng/toast';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {CalendarModule} from 'primeng/calendar';
 import { VerCitasComponent } from './ver-citas/ver-citas.component';
+import { PacientesComponent } from './pacientes/pacientes.component';
+import { CitasPacienteComponent } from './pacientes/citas-paciente/citas-paciente.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { VerCitasComponent } from './ver-citas/ver-citas.component';
     EditUsuarioComponent,
     ProfesionalesComponent,
     AbrirAgendaComponent,
-    VerCitasComponent
+    VerCitasComponent,
+    PacientesComponent,
+    CitasPacienteComponent
   ],
   imports: [
     CommonModule,

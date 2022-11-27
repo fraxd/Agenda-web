@@ -66,6 +66,7 @@ export class SelectEspecialidadProfesionalComponent implements OnInit {
 
   submit(profesionalVar:profesional){
     this.profesional = profesionalVar;
+    localStorage.setItem('NombreProfesional', this.profesional.nombre);
     localStorage.setItem('profesionalUID', this.profesional.uid);
     localStorage.setItem('EspecialidadProfesional', this.profesional.especialidad);
     this.agendaHoraService.setProfesional(this.profesional);

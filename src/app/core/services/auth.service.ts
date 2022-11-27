@@ -48,9 +48,7 @@ export class AuthService {
     this.afauth.signInWithEmailAndPassword(email, password)
       .then((result) => {
         if (result.user?.emailVerified) {
-          if (rol == 'paciente') {
-            this.router.navigate(['/hubsalud']);
-          } else this.router.navigate(['/dashboard']);
+          this.router.navigate(['/loading']);
         } else {
           this.logOut();
           this.router.navigate(['/verificar-email']);

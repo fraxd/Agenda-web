@@ -11,6 +11,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { FailPaymentComponent } from './fail-payment/fail-payment.component';
 import { HubsaludComponent } from './hubsalud/hubsalud.component';
 import { MisHorasComponent } from './mis-horas/mis-horas.component';
+import { TodasLasHorasComponent } from './mis-horas/todas-las-horas/todas-las-horas.component';
 import { ReAgendarComponent } from './re-agendar/re-agendar.component';
 
 
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'misHoras',
         component: MisHorasComponent,
+      },
+      {
+        path: 'misHorasPasadas',
+        component: TodasLasHorasComponent
       },
       {
         path: 'agendar',

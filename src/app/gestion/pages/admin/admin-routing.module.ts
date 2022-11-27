@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NuevoUsuarioComponent } from './nuevo-usuario/nuevo-usuario.component';
+import { CitasPacienteComponent } from './pacientes/citas-paciente/citas-paciente.component';
+import { PacientesComponent } from './pacientes/pacientes.component';
 import { ProfesionalesComponent } from './profesionales/profesionales.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { VerCitasComponent } from './ver-citas/ver-citas.component';
@@ -24,6 +26,14 @@ const routes: Routes = [
   {
     path: 'verCitasProfesional',
     component: VerCitasComponent
+  },
+  {
+    path: 'listPacientes',
+    component: PacientesComponent
+  },
+  {
+    path: 'verCitasPaciente',
+    component: CitasPacienteComponent
   }
 ];
 

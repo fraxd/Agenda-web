@@ -36,36 +36,36 @@ export class DisponibilidadService {
     
       const lunesTemp: horasSesion = {
         activo: false,
-        horaInicio: new Date(500000000000),
-        horaFin: new Date(500000000000),
+        horaInicio: new Date(5000000),
+        horaFin: new Date(5000000),
       }
       const martesTemp: horasSesion = {
         activo: false,
-        horaInicio: new Date(500000000000),
-        horaFin: new Date(500000000000),
+        horaInicio: new Date(5000000),
+        horaFin: new Date(5000000),
       }
       const miercolesTemp: horasSesion = {
         activo: false,
-        horaInicio: new Date(500000000000),
-        horaFin: new Date(500000000000),
+        horaInicio: new Date(5000000),
+        horaFin: new Date(5000000),
       }
       const juevesTemp: horasSesion = {
         activo: false,
-        horaInicio: new Date(500000000000),
-        horaFin: new Date(500000000000),
+        horaInicio: new Date(5000000),
+        horaFin: new Date(5000000),
       }
       const viernesTemp: horasSesion = {
         activo: false,
-        horaInicio: new Date(500000000000),
-        horaFin: new Date(500000000000),
+        horaInicio: new Date(5000000),
+        horaFin: new Date(5000000),
       }
 
     for( let i=0; i<diasSelected.length; i++){
       switch(diasSelected[i]){
         case 'Lunes':
           lunesTemp.activo = true;
-          lunesTemp.horaInicio = horaInicio[i];
-          lunesTemp.horaFin = horaFin[i]
+          lunesTemp.horaInicio =horaInicio[i];
+          lunesTemp.horaFin = horaFin[i];
           break;
         case 'Martes':
           martesTemp.activo = true;

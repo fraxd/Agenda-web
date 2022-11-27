@@ -47,9 +47,11 @@
 </div>
 <br>
 <div class="row justify-content-md-center">
+    <div  class="row col-4" *ngIf="flagSesion">
+        <button pButton pRipple type="button" label="Conectarse a Sesion" (click)="connectSesion()" style="margin-left: 10px"></button>
+    </div>
     <div class="row col-4" *ngIf="flagSesion">
         <button pButton pRipple type="button" label="Cancelar Hora" class="p-button-danger" (click)="cancelarHora()"></button>
-        
     </div>
 
     <div class="row col-4" *ngIf="!flagSesion">

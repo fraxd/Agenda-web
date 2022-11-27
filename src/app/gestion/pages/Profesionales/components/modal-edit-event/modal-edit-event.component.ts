@@ -26,7 +26,7 @@ export class ModalEditEventComponent implements OnInit {
   ngOnInit(): void {
     let temp = this.config.data;
     this.evento = temp['event'];
-    this.fechaApertura = temp['fecha'];
+    this.fechaApertura = new Date(temp['fecha']).toLocaleString();  
     this.setearDatos();
     if(this.evento.pacienteUID )this.agendaService.getNombrePaciente(this.evento.pacienteUID!).subscribe((resp:any)=>{
       this.nombrePaciente = resp.displayName;
@@ -63,6 +63,10 @@ export class ModalEditEventComponent implements OnInit {
       },
       acceptLabel: 'Si, estoy seguro'
   });
+  }
+
+  connectSesion(){
+    if(this.evento.urlProfesional)window.open(this.evento.urlProfesional, "_blank");
   }
 
 }

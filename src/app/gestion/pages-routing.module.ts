@@ -13,6 +13,7 @@ import { AbrirAgendaComponent } from './pages/Profesionales/abrir-agenda/abrir-a
 import { abrirAgendaResolver } from '../core/resolvers/abrirAgenda.resolver';
 import { profesionalGuard } from '../shared/profesional.guard';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { LoadingComponent } from './pages/loading/loading.component';
 
 
 
@@ -89,6 +90,10 @@ const routes: Routes = [
     ],
     
   },
+  {
+    path: 'loading',
+    component: LoadingComponent
+  }
 
 ];
 

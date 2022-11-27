@@ -20,7 +20,7 @@
                 <p-card>
                     <b>Ultima fecha Aperturada:</b><br>
                     <b style="color:rgb(133, 0, 186);"> {{lastOpen | date: 'dd/MM/yyyy'}}</b>
-                    br
+                    <br>
                     <div class="row col center">
                         <button pButton pRipple type="button" label="Abrir Agenda" (onClick)="redirectAbrir" class="p-button-outlined p-button-rounded p-button-help"></button>
                     </div>
@@ -86,7 +86,7 @@
                 </p-table>
                 <br>
                 <div class="row col center">
-                    <button pButton pRipple type="button" label="Ver todas" (onclick)="redirect" class="p-button-rounded p-button-success"></button>
+                    <button pButton pRipple type="button" label="Ver todas" (click)="redirect()" class="p-button-rounded p-button-success"></button>
     
                 </div>
                 <!-- Tal vez poner una tabla con los proximos pacientes y chao era.-->

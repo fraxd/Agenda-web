@@ -17,12 +17,12 @@ export class PagesComponent implements OnInit {
 
   items: MenuItem[];
   public rol:string = localStorage.getItem('userRol') || 'null';
-  public user:User = JSON.parse(localStorage.getItem('user') || (''));
-  public nombre: string;
+  nombreUsuario: string = 'Usuario';
   constructor(private router:Router, private auth:AuthService) { }
 
   ngOnInit(): void {
-    this.nombre = this.user.displayName!;
+    this.nombreUsuario = localStorage.getItem('nombre') as string || 'Usuario';
+    console.log(this.nombreUsuario)
     customInitFunctions();
 
     if(this.rol==='profesional'){
@@ -64,23 +64,18 @@ export class PagesComponent implements OnInit {
         },
         {
           label: 'Profesionales',
-          icon: 'pi pi-fw',
+          icon: 'pi pi-fw pi-users',
           routerLink: 'admin/listProfesionales'
         },
         {
           label: 'Pacientes',
-          icon: 'pi pi-fw',
-          routerLink: 'list-pacientes'
+          icon: 'pi pi-fw pi-users',
+          routerLink: 'admin/listPacientes'
         },
         {
           label: 'Usuarios',
-          icon: 'pi pi-fw',
+          icon: 'pi pi-fw pi-users',
           routerLink: 'admin/listUsuarios'
-        },
-        {
-          label: 'Citas agendadas',
-          icon: 'pi pi-fw',
-          routerLink: 'list-citas'
         },
         {
           label: 'Editar perfil',

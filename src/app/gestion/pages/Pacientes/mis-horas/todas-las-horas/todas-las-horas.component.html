@@ -1,8 +1,8 @@
 <!-- Dialogo de confirmacion-->
-<p-confirmDialog header="Confirmacion" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<!-- <p-confirmDialog header="Confirmacion" icon="pi pi-exclamation-triangle"></p-confirmDialog> -->
 
 
-<p-card header="Mis Horas Agendadas">
+<p-card header="Mis Horas Pasadas">
 
     <p-table #dt [value]="sesiones" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true"
@@ -11,7 +11,7 @@
             <div class="table-header">
                 <div class="row justify-content-end">
                     <div class="col-2">
-                        <p-button label="Ver Sesiones Pasadas" icon="pi pi-check" styleClass="p-button-sm" (onClick)="redirect()"></p-button>
+                        <p-button label="Ver Proximas Sesiones" icon="pi pi-check" styleClass="p-button-sm" (onClick)="redirect()"></p-button>
                     </div>
                 </div>
             </div>
@@ -52,17 +52,7 @@
                 </th>
                 <th style="width: 5rem">
                     <div class="flex justify-content-between align-items-center">
-                        Link Zoom
-                    </div>
-                </th>
-                <th style="width: 5rem">
-                    <div class="flex justify-content-between align-items-center">
                         Re Agendar
-                    </div>
-                </th>
-                <th style="width: 5rem">
-                    <div class="flex justify-content-between align-items-center">
-                        Anular
                     </div>
                 </th>
             </tr>
@@ -89,19 +79,11 @@
                     <span class="p-column-title">Date</span>
                     {{sesion.timeStart | date: 'HH:mm'}}
                 </td>
-
-                <td style="text-align: center">
-                    <button pButton type="button" class="p-button-secondary" icon="pi pi-video" *ngIf="sesion.status !='Cancelada por el profesional'"
-                        (click)="navigate(sesion.urlPaciente)"></button>
-                </td>
-                <td style="text-align: center">
+                <td style="text-align: center" *ngIf="sesion.status === 'Cancelada por el profesional'">
                     <button pButton type="button" class="p-button-secondary" icon="pi pi-calendar"
                         (click)="reAgendar(sesion)"></button>
                 </td>
-                <td style="text-align: center">
-                    <button pButton type="button" class="p-button-secondary" icon="pi pi-ban"
-                        (click)="anular(sesion)"></button>
-                </td>
+
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
@@ -115,10 +97,11 @@
 </p-card>
 
 <p-toast></p-toast>
+
 <p-dialog header="Anulacion Cita" [(visible)]="display" [modal]="true" *ngIf="display">
     <b>Estimad@:</b>
     <p>Lamentablemente Su hora con el profesional {{sesionCancelada.nombreProfesional}} a sido cancelada por motivos de fuerza mayor.</p>
     <p>Te invitamos a Re-agendarla en el siguiente link.</p>
-    <button pButton pRipple type="button" label="Re-agendar" (click)="anular(sesionCancelada)" class="p-button-rounded p-button-info"></button>
+    <button pButton pRipple type="button" label="Re-agendar" (click)="reAgendar(sesionCancelada)" class="p-button-rounded p-button-info"></button>
 
 </p-dialog>

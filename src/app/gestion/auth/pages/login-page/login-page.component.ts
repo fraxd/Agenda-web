@@ -20,7 +20,7 @@ export class LoginPageComponent implements OnInit {
 
   loading: boolean = false;
 
-  constructor(private readonly fb: FormBuilder, public authService: AuthService, private readonly router: Router, private toastr: ToastrService) { }
+  constructor(private readonly fb: FormBuilder, public authService: AuthService, private readonly router: Router, private toastr: ToastrService) {   }
 
   ngOnInit(): void {
     this.loginForm = this.initForm();
@@ -28,6 +28,7 @@ export class LoginPageComponent implements OnInit {
       if(this.rol=='paciente') this.router.navigate(['/hubsalud']);
       else  this.router.navigate(['/dashboard']);
     } 
+    else localStorage.clear();
   }
   // Login
  onSubmit(): void {

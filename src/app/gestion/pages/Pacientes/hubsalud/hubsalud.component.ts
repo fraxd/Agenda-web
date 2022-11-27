@@ -11,8 +11,11 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class HubsaludComponent implements OnInit {
 
   items: MenuItem[];
+  nombreUsuario: string = 'Usuario';
 
-  constructor(private auth:AuthService) { }
+  constructor(private auth:AuthService) { 
+    this.nombreUsuario = localStorage.getItem('nombre') as string | 'Usuario';
+  }
 
   ngOnInit(): void {
     this.items = [

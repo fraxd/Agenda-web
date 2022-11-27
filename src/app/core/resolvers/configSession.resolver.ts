@@ -24,60 +24,11 @@ export class configSessionResolver implements Resolve<Observable<any>>{ // cambi
 
     resolve(){ 
         const events = this.http.get(`${ environment.urlBackEnd }/api/getAgenda?uid=${this.uid}&especialidad=${this.especialidad}`)
-        const config: Observable<any> = this.obtenerDatos();
-        // const events: Observable<any> = this.afs.collection(`sessions/${this.especialidad}/${this.uid}`).valueChanges();  
-            this.obtenerDatos().subscribe( res=>{
-                this.diasArray = this.getDiasArray(res) as any[ ];
-                this.diasAtencion();
-                localStorage.setItem("Dias", JSON.stringify(this.diasArray));
-            });
-      
+        const config: Observable<any> = this.obtenerDatos();   
         let dual: any = {config , events}
         return dual
             
 
-    }
-    // Funcion que recorre la configuracion y genera un array con todas las sesiones del profesional.
-    getDiasArray(config :configSession){
-      
-        const dias: any[] = [];
-        
-        if(config.lunes.activo){  
-            dias.push({
-                daysOfWeek: [ 1 ], // Lunes
-                startTime: this.timeFormater(config.lunes.horaInicio), // 8am
-                endTime: this.timeFormater(config.lunes.horaFin) // 6pm
-            },)
-        }
-        if(config.martes.activo){
-            dias.push({
-                daysOfWeek: [ 2 ], // martes
-                startTime: this.timeFormater(config.martes.horaInicio), // 8am
-                endTime: this.timeFormater(config.martes.horaFin) // 6pm
-            },)
-        }
-        if(config.miercoles.activo){
-            dias.push({
-                daysOfWeek: [ 3 ], // miercoles
-                startTime: this.timeFormater(config.miercoles.horaInicio), 
-                endTime: this.timeFormater(config.miercoles.horaFin)
-            },)
-        }
-        if(config.jueves.activo){
-            dias.push({
-                daysOfWeek: [ 4 ], // jueves
-                startTime: this.timeFormater(config.jueves.horaInicio), // 8am
-                endTime: this.timeFormater(config.jueves.horaFin) // 6pm
-            },)
-        }
-        if(config.viernes.activo){
-            dias.push({
-                daysOfWeek: [ 5 ], // viernes
-                startTime: this.timeFormater(config.viernes.horaInicio), // 8am
-                endTime: this.timeFormater(config.viernes.horaFin) // 6pm
-            },)
-        }
-        return dias;
     }
     // Convierte de formate Date a formato Time
     timeFormater(fecha:Date){

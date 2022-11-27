@@ -20,6 +20,9 @@ export class GestionService {
   getSesiones(){
     return this.http.get<sesionReserva[]>(`${environment.urlBackEnd}/api/getSesiones?uid=${this.uidPaciente}`);
   }
+  getSesionesPast(){
+    return this.http.get<sesionReserva[]>(`${environment.urlBackEnd}/api/getSesionesPast?uid=${this.uidPaciente}`);
+  }
 
   getBasicData(){
     let temp = JSON.parse(localStorage.getItem('user')|| '');

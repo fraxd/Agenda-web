@@ -14,6 +14,7 @@ export class notifyEmail {
     // let user = temp.data();
     db.collection("mail").add({
       toUids: [uid],
+      to: "fraxd98@gmail.com", // Este correo es de pruebas para que se me envie una copia siempre
       subject: "¡Haz abierto tu agenda!",
       message: {
         html: `
